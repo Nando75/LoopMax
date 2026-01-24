@@ -156,7 +156,7 @@ not a new project from scratch.
 
 ## 📦 Release Information
 
-| Item        | Value |
+|     LoopMax OS     |
 |------------|-------|
 | Version    | **1.0.0** |
 | Status     | Stable |
