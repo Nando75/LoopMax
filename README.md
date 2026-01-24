@@ -1,12 +1,16 @@
-<!-- ========================= -->
-<!--      LOOPMAX BANNER       -->
-<!-- ========================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+</style>
 
 <p align="center">
   <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
-<h1 align="center">LoopMax Embedded OS</h1>
+<h1 align="center" style="font-family: 'Audiowide', sans-serif; color: gold;">
+  LoopMax Embedded OS
+</h1>
+
+
 
 <p align="center">
   Modular Embedded Operating System<br>
