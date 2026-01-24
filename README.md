@@ -42,6 +42,8 @@ With LoopMax:
 👉 One system  
 👉 One core  
 👉 Infinite devices  
+👉 Same professional UI Bootstap.
+
 
 ---
 
@@ -57,11 +59,20 @@ LoopMax is structured in multiple layers:
   - Multi-framework support (Arduino / ESP-IDF)
   - Multi-board support
 - **Application Modules**
-  - Weather
-  - Sensors
-  - Motors
-  - Automations
+  - Zappy2 (free 2 channels rele module)
+  
   - Extensible over time
+
+---
+
+## 🧩 Web UI (Bootstrap)
+
+<h5 align="center">Relè module (2ch)</h5>
+<p align="center">
+  <img src="docs/img/ui_Module.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+
 
 ---
 
