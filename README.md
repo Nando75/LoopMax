@@ -3,7 +3,7 @@
 <!-- ========================= -->
 
 <p align="center">
-  <img src="docs/assets/loopmax_banner.png" alt="LoopMax Embedded OS" width="600">
+  <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
 <h1 align="center">LoopMax Embedded OS</h1>
