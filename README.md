@@ -3,12 +3,6 @@
   <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
-<h1 align="center" style="font-family: 'Audiowide', sans-serif; color: gold;">
-  LoopMax Embedded OS
-</h1>
-
-
-
 <p align="center">
   Modular Embedded Operating System<br>
   Core • Web OS • HAL • Dynamic Modules
