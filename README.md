@@ -1,6 +1,3 @@
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
-</style>
 
 <p align="center">
   <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" width="600">
