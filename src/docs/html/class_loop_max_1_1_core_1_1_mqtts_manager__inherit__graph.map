@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::MqttsManager" name="LoopMax::Core::MqttsManager">
+<area shape="rect" id="Node000001" title=" " alt="" coords="164,96,365,123"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_i_service.html" title=" " alt="" coords="5,13,172,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,44,240,94,235,97,129,49"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1_i_hal___mqtts.html" title=" " alt="" coords="195,5,334,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,62,267,97,262,94,263,66"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_services_1_1_i_mqtts.html" title=" " alt="" coords="358,5,499,48"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="375,55,291,98,289,93,370,56"/>
+</map>

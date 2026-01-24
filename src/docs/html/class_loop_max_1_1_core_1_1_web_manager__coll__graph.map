@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::WebManager" name="LoopMax::Core::WebManager">
+<area shape="rect" id="Node000001" title=" " alt="" coords="167,96,362,123"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_i_service.html" title=" " alt="" coords="5,13,172,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,44,240,94,235,97,129,49"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1_i_hal___web.html" title=" " alt="" coords="195,5,334,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,62,267,97,262,94,263,66"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_services_1_1_i_web.html" title=" " alt="" coords="358,13,529,40"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="404,46,293,98,291,93,399,47"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::Hal::IHal_Web" name="LoopMax::Core::Hal::IHal_Web">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,144,115"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_hal_1_1ard__esp32__asyncweb.html" title=" " alt="" coords="211,5,366,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,65,220,47,215,50,159,70"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1idf__esp32__asyncweb.html" title=" " alt="" coords="213,72,364,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,91,215,93,210,94,160,96"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_core_1_1_web_manager.html" title=" " alt="" coords="192,139,386,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,115,192,124,236,138,231,138,191,129,158,120"/>
+</map>

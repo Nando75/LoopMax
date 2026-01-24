@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::Hal::IHal_Storage" name="LoopMax::Core::Hal::IHal_Storage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,144,115"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_hal_1_1ard__storage__littlefs.html" title=" " alt="" coords="229,5,368,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,66,231,46,226,49,159,71"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1idf__storage__littlefs.html" title=" " alt="" coords="229,72,368,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,91,231,92,226,94,159,96"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_core_1_1_storage_manager.html" title=" " alt="" coords="192,139,405,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,115,192,124,240,138,235,138,191,129,159,120"/>
+</map>

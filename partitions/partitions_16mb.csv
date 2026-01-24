@@ -1,0 +1,17 @@
+# NVS
+nvs,        data, nvs,         0x9000,     0x5000
+
+# OTA data
+otadata,    data, ota,         0xE000,     0x2000
+
+# APP0
+app0,       app,  ota_0,       0x10000,    0x5C0000
+
+# APP1
+app1,       app,  ota_1,       0x5D0000,   0x5C0000
+
+# FLASHFS (ridotta a 4.5 MB)
+flashfs,    data, spiffs,      0xB90000,   0x480000
+
+# Core dump
+coredump,   data, coredump,    0x1010000,  0x40000

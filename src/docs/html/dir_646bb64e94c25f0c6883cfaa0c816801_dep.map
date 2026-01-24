@@ -1,0 +1,16 @@
+<map id="core/hal/idf" name="core/hal/idf">
+<area shape="rect" id="node2" href="dir_4597c8dfb4680d76b8caab4743dd9766.html" title="geo" alt="" coords="99,64,141,91"/>
+<area shape="rect" id="node3" href="dir_92f86e5c7018b0bd3e2142a058493202.html" title="https" alt="" coords="166,64,216,91"/>
+<area shape="rect" id="node4" href="dir_56adbdcf14e7af22ef1483f5f1acd31b.html" title="mqtts" alt="" coords="240,64,294,91"/>
+<area shape="rect" id="node5" href="dir_f90235472837c7e2b5994ba6adc9282c.html" title="pins" alt="" coords="317,64,363,91"/>
+<area shape="rect" id="node6" href="dir_9fc065c6fdeb0e4c1d1df7d64b73bd9a.html" title="serial" alt="" coords="387,64,440,91"/>
+<area shape="rect" id="node7" href="dir_eb9448fa64f18b3b37b1d020703540d9.html" title="storage" alt="" coords="464,64,528,91"/>
+<area shape="rect" id="node8" href="dir_c1fdd214aa134b40d4426bda2d8c6247.html" title="system" alt="" coords="552,64,616,91"/>
+<area shape="rect" id="node9" href="dir_b4c1d3ddd103eed43d694a1bd1d3340b.html" title="task" alt="" coords="641,64,687,91"/>
+<area shape="rect" id="node10" href="dir_ebf9182de3cc11ffc132cdaf70445392.html" title="timer" alt="" coords="711,64,761,91"/>
+<area shape="rect" id="node11" href="dir_f14d2e5ab628ec7239e02acd7b10ac94.html" title="update" alt="" coords="786,64,846,91"/>
+<area shape="rect" id="node12" href="dir_ecf3a6b8fe8ac37217854022ddc1d1ba.html" title="web" alt="" coords="871,64,916,91"/>
+<area shape="rect" id="node13" href="dir_144aecbf6e2352010da7c6ab11077525.html" title="wifi" alt="" coords="941,64,982,91"/>
+<area shape="rect" id="clust2" href="dir_646bb64e94c25f0c6883cfaa0c816801.html" alt="" coords="27,53,993,101"/>
+<area shape="rect" id="clust1" href="dir_e9eb99d1a6f9d2db64da40c4536653b2.html" title="hal" alt="" coords="16,16,1004,112"/>
+</map>

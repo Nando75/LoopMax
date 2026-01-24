@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="core/favicon.png">
+<title></title>
+<link rel='stylesheet' href='core/bootstrap.min.css'>
+<link rel='stylesheet' href='core/style.css'>
+<script type="module" src="core/js/LoopMaxCore.js"></script>
+</head>
+  <body class="p-3" data-bs-theme="light">
+      <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex 
+          flex-column justify-content-center align-items-center" 
+          style="z-index: 9999; background-color: rgba(0,0,0,0.25);">
+          <div class="spinner-border text-light mb-2" role="status" style="width: 2rem; height: 2rem;">
+              <span class="visually-hidden">Loading...</span>
+          </div>
+          <div id="loadingStatus" class="text-light fw-bold text-center"></div>
+      </div>
+      <h3 id="headerTitle" class='text-center textEffectLight secondFont'>LoopMax</h3>
+      <p id="headerSubTitle" class='text-center textGlow secondFont'>by SmartiLab</p>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+      <ul class="nav nav-tabs" id="configTabs" role="tablist">
+          <li class="nav-item ms-auto d-flex align-items-center gap-2" role="presentation">
+              <small id="bdDebug" class="ms-2 badge bg-danger d-none"></small>
+              <small id="bdOperatingMode" class="ms-2 badge bg-secondary"></small>
+
+              <div class="dropdown d-inline-block" id="langDropdownContainer">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="langDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" id="langDropdownMenu" aria-labelledby="langDropdownBtn"></ul>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary" id="themeToggle" type="button">🌙</button>
+              
+            <button class="btn btn-sm btn-outline-secondary d-none" id="btLogOut" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                    </svg>
+            </button>
+          </li>
+      </ul>
+      <div class="tab-content p-3 border border-top-0" id="configTabsContent"></div>
+      <footer id="pageFooter" class="footer mt-auto py-2 text-center bg-body-tertiary secondFont">
+        <div class="container">
+            <span class="text-body-secondary">Caricamento...</span>
+            <div class="mt-0"  style="line-height: 0.9;">
+                <code class="text-muted" style="font-size: 0.65rem;" id="footerDevInfo"></code>
+            </div>
+        </div>
+      </footer>
+      <script src="core/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

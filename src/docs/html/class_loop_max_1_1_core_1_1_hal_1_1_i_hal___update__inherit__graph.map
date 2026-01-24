@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::Hal::IHal_Update" name="LoopMax::Core::Hal::IHal_Update">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,144,115"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_hal_1_1ard__update.html" title=" " alt="" coords="228,5,366,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,66,230,46,225,49,160,71"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1idf__update.html" title=" " alt="" coords="228,72,366,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,91,230,92,225,94,160,96"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_core_1_1_update_manager.html" title=" " alt="" coords="192,139,402,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,115,192,124,239,138,234,138,191,129,159,120"/>
+</map>

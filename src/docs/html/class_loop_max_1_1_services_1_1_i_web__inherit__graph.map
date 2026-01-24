@@ -1,0 +1,5 @@
+<map id="LoopMax::Services::IWeb" name="LoopMax::Services::IWeb">
+<area shape="rect" id="Node000001" title=" " alt="" coords="17,5,188,32"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_web_manager.html" title=" " alt="" coords="5,80,200,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,46,105,81,100,79,101,50"/>
+</map>

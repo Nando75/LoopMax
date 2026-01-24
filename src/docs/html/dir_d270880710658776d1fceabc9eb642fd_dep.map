@@ -1,0 +1,16 @@
+<map id="core/hal/arduino" name="core/hal/arduino">
+<area shape="rect" id="node2" href="dir_aba5caf0813a6c2373ebaa31fc308faf.html" title="geo" alt="" coords="126,64,168,91"/>
+<area shape="rect" id="node3" href="dir_2e78a79e8fbb672d33d26f1bd1ed0149.html" title="https" alt="" coords="192,64,242,91"/>
+<area shape="rect" id="node4" href="dir_f40c189924b0104207c8699e24da20fe.html" title="mqtts" alt="" coords="266,64,320,91"/>
+<area shape="rect" id="node5" href="dir_a7b59bbd9f090dac419d6905047f4339.html" title="pins" alt="" coords="344,64,389,91"/>
+<area shape="rect" id="node6" href="dir_f32ad3683414b518b34cfe956de0a82b.html" title="serial" alt="" coords="414,64,466,91"/>
+<area shape="rect" id="node7" href="dir_97046bf06816c602fd8fe4fb13d1a19b.html" title="storage" alt="" coords="490,64,555,91"/>
+<area shape="rect" id="node8" href="dir_16a7401aeb5844ea45fc39ac36d52a0b.html" title="system" alt="" coords="578,64,643,91"/>
+<area shape="rect" id="node9" href="dir_a3dfb1895e3c0866030477ec7fc06826.html" title="task" alt="" coords="668,64,714,91"/>
+<area shape="rect" id="node10" href="dir_e0dc7b708e07a131cd89595e28405b93.html" title="timer" alt="" coords="738,64,788,91"/>
+<area shape="rect" id="node11" href="dir_6f85ffba2f193968c9f5e82139752ae7.html" title="update" alt="" coords="812,64,873,91"/>
+<area shape="rect" id="node12" href="dir_457cf197eb4ce4cb71ce4ba2d39e9cc9.html" title="web" alt="" coords="897,64,943,91"/>
+<area shape="rect" id="node13" href="dir_e80c61234141bd36e7c80513a9942a67.html" title="wifi" alt="" coords="967,64,1009,91"/>
+<area shape="rect" id="clust2" href="dir_d270880710658776d1fceabc9eb642fd.html" alt="" coords="27,53,1020,101"/>
+<area shape="rect" id="clust1" href="dir_e9eb99d1a6f9d2db64da40c4536653b2.html" title="hal" alt="" coords="16,16,1031,112"/>
+</map>

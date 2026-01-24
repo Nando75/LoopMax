@@ -1,0 +1,18 @@
+<map id="core/services" name="core/services">
+<area shape="rect" id="node2" href="dir_123b900690339ef6f0972644ba02f6db.html" title="config" alt="" coords="132,64,188,91"/>
+<area shape="rect" id="node3" href="dir_52171e7868cfec5ebecc615ea3f9c223.html" title="geo" alt="" coords="212,64,254,91"/>
+<area shape="rect" id="node4" href="dir_85c7ec96b3efa7c0082a527e68d0cd8b.html" title="https" alt="" coords="279,64,329,91"/>
+<area shape="rect" id="node5" href="dir_50c46c24568aec14fb291e8efa4c55d5.html" title="logs" alt="" coords="353,64,399,91"/>
+<area shape="rect" id="node6" href="dir_7621ff82ef928e2258ed00df45719c7f.html" title="mqtts" alt="" coords="422,64,476,91"/>
+<area shape="rect" id="node7" href="dir_09f0ed67a86a23f4cfe2a066dbd7f8c5.html" title="pins" alt="" coords="500,64,545,91"/>
+<area shape="rect" id="node8" href="dir_a7309d699a282026bfe11cb3a389f3d4.html" title="reset" alt="" coords="570,64,620,91"/>
+<area shape="rect" id="node9" href="dir_50e3596057a330f776c9130457f8bb05.html" title="serial" alt="" coords="644,64,697,91"/>
+<area shape="rect" id="node10" href="dir_0887fbff7b6f38e8aa370258af10807a.html" title="storage" alt="" coords="721,64,786,91"/>
+<area shape="rect" id="node11" href="dir_2a1db6b546a730e95ea6084c1fef93f3.html" title="system" alt="" coords="809,64,874,91"/>
+<area shape="rect" id="node12" href="dir_bdda9b0ec7d795e5fa75a81d9876d801.html" title="time" alt="" coords="898,64,944,91"/>
+<area shape="rect" id="node13" href="dir_41d2b9c4a360fd2b49441791e0f10669.html" title="update" alt="" coords="968,64,1029,91"/>
+<area shape="rect" id="node14" href="dir_8cdd2440c29bad95841b7a6abca2043f.html" title="web" alt="" coords="1053,64,1099,91"/>
+<area shape="rect" id="node15" href="dir_160e7ccd47a4ff99cb1e351ef8e1806e.html" title="wifi" alt="" coords="1123,64,1165,91"/>
+<area shape="rect" id="clust2" href="dir_ac54a6420f97b2f2d7fa1fc34488f7c1.html" alt="" coords="27,53,1176,101"/>
+<area shape="rect" id="clust1" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="16,16,1187,112"/>
+</map>

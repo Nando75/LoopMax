@@ -1,0 +1,7 @@
+<map id="LoopMax::Core::Hal::IHal_Task" name="LoopMax::Core::Hal::IHal_Task">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,225,48"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_hal_1_1ard__task.html" title=" " alt="" coords="5,96,144,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,58,95,98,91,94,124,61"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1ard__task__rtos.html" title=" " alt="" coords="168,96,306,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="186,57,221,96,216,95,184,62"/>
+</map>

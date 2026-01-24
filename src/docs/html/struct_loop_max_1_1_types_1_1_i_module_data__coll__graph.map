@@ -1,0 +1,7 @@
+<map id="LoopMax::Types::IModuleData" name="LoopMax::Types::IModuleData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="102,104,302,131"/>
+<area shape="rect" id="Node000002" href="$struct_loop_max_1_1_types_1_1_https_data.html" title=" " alt="" coords="5,5,191,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,40,191,103,186,104,122,45"/>
+<area shape="rect" id="Node000003" href="$struct_loop_max_1_1_types_1_1_mqtts_data.html" title=" " alt="" coords="214,5,400,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="285,42,217,106,214,101,280,43"/>
+</map>

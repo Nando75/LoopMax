@@ -1,0 +1,9 @@
+<map id="LoopMax::Core::GeoManager" name="LoopMax::Core::GeoManager">
+<area shape="rect" id="Node000001" title=" " alt="" coords="220,64,412,91"/>
+<area shape="rect" id="Node000002" href="$class_loop_max_1_1_core_1_1_i_service.html" title=" " alt="" coords="5,5,172,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,34,264,62,259,65,158,39"/>
+<area shape="rect" id="Node000003" href="$class_loop_max_1_1_core_1_1_hal_1_1_i_hal___geo_info.html" title=" " alt="" coords="19,56,158,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,75,222,77,217,78,173,80"/>
+<area shape="rect" id="Node000004" href="$class_loop_max_1_1_services_1_1_i_geo_info.html" title=" " alt="" coords="18,123,159,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="174,116,265,92,270,91,175,121"/>
+</map>
