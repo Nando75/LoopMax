@@ -1,6 +1,7 @@
 
 <p align="center">
-  <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" width="600">
+  <img src="docs/img/LoopMaxOS.webp" alt="LoopMax Embedded OS" style="max-width:100%; height:auto;">
+
 </p>
 
 <p align="center">
