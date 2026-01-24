@@ -64,6 +64,28 @@ LoopMax is structured in multiple layers:
   - Extensible over time
 
 ---
+## 🚀 HAL (Hardware Abstraction Layer)
+## Service Manager Architecture
+
+Each Service Manager extends three interfaces:
+
+- **`IService`**  
+  Used by the core to manage the service lifecycle.
+
+- **`IHal_XxxxManager`**  
+  Core manager interface, with a base class that varies depending on the underlying hardware.
+
+- **`IXxxx`**  
+  Public interface exposed to external application modules and implemented by the various service managers.
+
+Below is an example of the structure of a single service:
+<p align="center">
+  <img src="docs/img/Hal.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+
+
+---
 
 ## 🧩 Web UI (Bootstrap)
 
