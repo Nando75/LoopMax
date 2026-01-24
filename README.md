@@ -154,6 +154,26 @@ not a new project from scratch.
 
 ---
 
+## 📦 Release Information
+
+| Item        | Value |
+|------------|-------|
+| Version    | **1.0.0** |
+| Status     | Stable |
+| Updates    | Continuous |
+
+---
+
+## 🧩 Currently Supported Boards  
+*(continuously updated)*
+
+| Framework | Board         | Core |
+|----------|--------------|------|
+| Arduino  | ESP32-WROOM  | 2    |
+
+
+---
+
 ## ⚠️ License
 
 This project is available **for personal, non-commercial use only**.  
