@@ -60,7 +60,7 @@ LoopMax is structured in multiple layers:
   - Multi-framework support (Arduino / ESP-IDF)
   - Multi-board support
 - **Application Modules**
-  - Zappy2 (free 2 channels rele module)
+  - Zappy2 (included in the project as an example)
   
   - Extensible over time
 
