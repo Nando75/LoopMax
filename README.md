@@ -72,6 +72,51 @@ LoopMax is structured in multiple layers:
   <img src="docs/img/ui_Module.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
+<h5 align="center">Device configuration</h5>
+<p align="center">
+  <img src="docs/img/ui_Configuration.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Application Modules</h5>
+<p align="center">
+  <img src="docs/img/ui_ModuleList.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Device services</h5>
+<p align="center">
+  <img src="docs/img/ui_Services.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Service: System</h5>
+<p align="center">
+  <img src="docs/img/ui_System.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Service: Wifi</h5>
+<p align="center">
+  <img src="docs/img/ui_Wifi.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Service: Web</h5>
+<p align="center">
+  <img src="docs/img/ui_Web.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Boot timeline</h5>
+<p align="center">
+  <img src="docs/img/ui_BootTimeLine.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">Events timeline</h5>
+<p align="center">
+  <img src="docs/img/EventsTimeline.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+<h5 align="center">System Logs</h5>
+<p align="center">
+  <img src="docs/img/ui_Logs.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
 
 
 ---
