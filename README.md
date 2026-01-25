@@ -171,7 +171,6 @@ not a new project from scratch.
 |----------|--------------|------|
 | Arduino  | ESP32-WROOM  | 2    |
 
-
 ---
 
 ## ⚠️ License
@@ -185,3 +184,48 @@ See the `LICENSE` file for full terms.
 
 The project is under active development.  
 Technical documentation will be expanded progressively.
+
+
+# 🚀 LoopMax Flasher Tools
+
+## 🔗 Tool Link (Web Serial)
+Access the flasher tool directly from your browser:
+
+**https://smartilab.it/tools/**
+
+---
+
+## 🔧 Features
+- Flash firmware directly from the browser (Web Serial)
+- Supports ESP32 and ESP8266
+- Baudrate selection
+- Built-in Serial Monitor
+- Automatic upload of firmware + filesystem (LittleFS)
+- No external software required
+
+---
+
+## 📌 How to Use
+
+### 1️⃣ Open the tool
+Go to: **https://smartilab.it/tools/**
+
+### 2️⃣ Connect the board
+- Select the COM port
+- Set the baud rate (e.g. **115200**)
+- Click **Flash**
+
+### 3️⃣ Done!
+The board will be programmed and will start automatically.
+
+---
+
+## 🧰 Requirements
+- Browser with **Web Serial** support (Chrome / Edge)
+- ESP32 or ESP8266 connected via USB
+- Firmware + filesystem files available on the server
+
+---
+
+## 🧩 Project Structure
+
