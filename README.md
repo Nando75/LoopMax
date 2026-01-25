@@ -23,6 +23,12 @@ allowing developers to focus only on application logic.
 
 ---
 
+# 🚀 Try it
+Access the flasher tool directly from your browser:
+**https://smartilab.it/tools/**
+
+---
+
 ## 🚀 Why LoopMax
 
 Because enough with:
@@ -222,10 +228,9 @@ The board will be programmed and will start automatically.
 
 ## 🧰 Requirements
 - Browser with **Web Serial** support (Chrome / Edge)
-- ESP32 or ESP8266 connected via USB
-- Firmware + filesystem files available on the server
+- ESP32 connected via USB
 
 ---
 
-## 🧩 Project Structure
+
 
