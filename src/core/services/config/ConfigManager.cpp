@@ -504,7 +504,16 @@ namespace LoopMax::Core {
 
 
 
-                        
+                bool ConfigManager::resetSystem()
+                {
+                            _settings.apSsid = "LoopMaxAP" + std::to_string(Helper::getRandomNumber(1000));
+                            _settings.apPsw = "loopmaxap";
+                            _settings.mode = SystemMode::AP;
+                            _settings.wfSsid     = "";
+                            _settings.wfPsw      = "";
+                            return this->saveConfig();
+                }
+                
 
 
                 void ConfigManager::registerEndpoints() { 
@@ -514,19 +523,15 @@ namespace LoopMax::Core {
                         0x01,
                         [this](IHttpContext& httpCtx){
                             
-                            _settings.apSsid = "LoopMaxAP" + std::to_string(Helper::getRandomNumber(1000));
-                            _settings.apPsw = "loopmaxap";
-                            _settings.mode = SystemMode::AP;
-                            _settings.wfSsid     = "";
-                            _settings.wfPsw      = "";
-                            bool res = this->saveConfig();
-                            if(res) 
+                            
+                            if(this->resetSystem()) 
                             {
                                 ctx->logs.write("Device reset ...",LogType::INFO,this->name(), this->icon());
                                 httpCtx.send(200, "application/json", "{\"status\":\"ok\"}");
                                 ctx->system.restart();
                             }
-                            if(!res) httpCtx.send(200, "application/json", "{\"status\":\"ko\"}");
+                            else httpCtx.send(200, "application/json", "{\"status\":\"ko\"}");
+                            
                         }
                     });
 

@@ -1,5 +1,6 @@
 
 #pragma once
+#include "BaseConfig.h"
 #include "core/hal/hal.h"
 #include "core/services/IService.h"
 #include "core/hal/interfaces/IHal_Reset.h"
@@ -48,7 +49,7 @@ namespace LoopMax {
                     
                     bool resetTriggered = false;
                     unsigned long resetPressTime = 0;
-                    uint32_t _pinNum = 33;
+                    uint32_t _pinNum = PIN_RESET;
                     PinMode _pinMode = PinMode::InPullUp;
                     std::vector<WebCommand> _webCommands;
                     

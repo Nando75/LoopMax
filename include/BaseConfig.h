@@ -21,7 +21,7 @@
 #define BYSIZE_MIN   128        
 
 //PIN RESET
-#define PIN_RESET 0           // Reset btn pin
+#define PIN_RESET 4           // Reset btn pin
 #define RESET_HOLD_TIME 10000 // (mS) 10 seconds
 
 //GENERAL SETTINGS:

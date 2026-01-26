@@ -62,6 +62,8 @@ namespace LoopMax {
                     void loadConfig(const std::string& moduleName,std::vector<modulePin>& pins,std::string& JsonConfig) override;
                     bool saveModuleConfig(const std::string& moduleName,const std::vector<modulePin>& pins,const std::string& JsonConfig) override;
                     bool removeConfig(const std::string& moduleName) override;
+
+                    bool resetSystem();
                     
                     
 

@@ -63,17 +63,13 @@ namespace LoopMax::Types {
 
         enum class SystemMode : uint8_t {
             AP,
-            LAN,
-            //CLOUD,
-            RESET
+            LAN
         };
 
         inline const char* SystemModeToStr(SystemMode m) {
             switch(m) {
                 case SystemMode::AP:    return "AP";
                 case SystemMode::LAN:   return "LAN";
-                //case SystemMode::CLOUD: return "CLOUD";
-                case SystemMode::RESET: return "RESET";
                 default:                return "AP";
             }
         }
@@ -84,8 +80,6 @@ namespace LoopMax::Types {
         inline SystemMode SystemModeFromStr(const char* mode) {
             if (strcmp(mode, "AP") == 0)    return SystemMode::AP;
             if (strcmp(mode, "LAN") == 0)   return SystemMode::LAN;
-            //if (strcmp(mode, "CLOUD") == 0) return SystemMode::CLOUD;
-            if (strcmp(mode, "RESET") == 0) return SystemMode::RESET;
             return SystemMode::AP; // default
         }
 

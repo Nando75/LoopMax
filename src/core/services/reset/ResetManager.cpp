@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include "ResetManager.h"
-#include "BaseConfig.h"
 #include "core/services/serial/SerialManager.h"
 #include "core/services/pins/PinsManager.h"
 #include "core/services/logs/LogsManager.h"
 #include "core/services/system/SystemManager.h"
 #include "core/services/time/TimeManager.h"
+#include "core/services/config/ConfigManager.h"
 
 
 
@@ -17,12 +17,9 @@ namespace LoopMax::Core {
                 {}
                 //IService
                 void ResetManager::start() {
-                    _pinNum = PIN_RESET;
-                    
-                     ctx->pins.setMode(_pinNum,_pinMode);
+                    ctx->pins.setMode(_pinNum,_pinMode);
                     this->resetPressTime = 0;
                     this->resetTriggered = false;
-
                      checkStartUpReset();
                      ctx->logs.write("Reset Ready",LoopMax::Types::LogType::INFO,this->name(), this->icon());
                 }
@@ -31,24 +28,24 @@ namespace LoopMax::Core {
                     currentState = Types::ServiceState::STOPPED;
                  }
                 
-                 void ResetManager::checkStartUpReset() {
-                    const unsigned long debounceDelay = 50;
-                    unsigned long startTime = ctx->time.millis();
-                    bool stableLow = false;
-                    while (ctx->time.millis() - startTime < 100) {
-                        if (digitalRead(PIN_RESET) == LOW) {
-                            delay(debounceDelay);
-                            if (digitalRead(PIN_RESET) == LOW) {
-                                stableLow = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (stableLow) Reset();
-
-                    
+               void ResetManager::checkStartUpReset() { 
+                    const unsigned long debounceDelay = 50; 
+                    unsigned long startTime = ctx->time.millis(); 
+                    bool stableLow = false; while (ctx->time.millis() - startTime < 100) 
+                        { 
+                                if (digitalRead(PIN_RESET) == LOW) 
+                                { 
+                                    delay(debounceDelay); 
+                                    if (digitalRead(PIN_RESET) == LOW) 
+                                    { 
+                                        stableLow = true; 
+                                        break; 
+                                    } 
+                                } 
+                        } 
+                        if (stableLow) Reset(); 
                 }
+
 
                 void ResetManager::loop() { 
                         // 1. CONTROLLO DI STATO (Gestito dal ServicesManager)
@@ -104,33 +101,22 @@ namespace LoopMax::Core {
 
                   void ResetManager::Reset() { 
                     
-                    ctx->logs.write("System reset ...",LoopMax::Types::LogType::INFO,this->name(), this->icon());
-                    ctx->system.setMode(SystemMode::RESET);
-                                    
+                    
+                    
+                    if(ctx->config.resetSystem())
+                    {
+                        ctx->logs.write("System reset ...",LoopMax::Types::LogType::INFO,this->name(), this->icon());
+                        ctx->system.restart();
+                    }
+                    else
+                    {
+                        ctx->logs.write("System reset failed",LoopMax::Types::LogType::ERROR,this->name(), this->icon());
+                    }
+                                                        
                  }
 
 
-                 void ResetManager::registerEndpoints() { 
-
-                    _webCommands.push_back({
-                        "core/reset",
-                        0x01, // GET
-                        [this](IHttpContext& httpCtx){
-                            
-                           
-                           ctx->serial.printLn("SERVIZIO COMANDO RICEVUTO");
-                           
-
-                            // Esempio lettura parametri: http://ip/zappy/setlng?lang=it
-                            if(httpCtx.hasParam("lang")) {
-                                std::string lang = httpCtx.getParam("lang");
-                                // Salva lingua...
-                            }
-                            
-                            httpCtx.send(200, "text/plain", "OK");
-                        }
-                    });
-                }
+                 void ResetManager::registerEndpoints() { }
 
 
 }
