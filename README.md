@@ -90,6 +90,32 @@ Below is an example of the structure of a single service:
   <img src="docs/img/Hal.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
+---
+## Zappy 2ch Module
+<p align="center">
+  <img src="docs/img/logo_zappy.png" alt="LoopMax Embedded OS" width="600">
+</p>
+
+The **LoopMax** project includes the **Zappy 2ch** module, an application module designed to control a **two-channel relay board**.
+
+The application module interfaces directly with the dual-relay hardware, allowing remote control of connected loads through the LoopMax system.
+
+A **Bootstrap-based user interface** is included and **dynamically loaded by the LoopMax core**, providing a simple and responsive web interface for controlling the relays without requiring additional frontend configuration.
+
+### 🔌 GPIO Pin Assignment
+
+The Zappy 2ch module uses the following GPIO pins:
+
+| GPIO  | Function | Description |
+|------:|----------|-------------|
+| GPIO 4  | Reset | At power-on, keep the button pressed for **10 seconds** to reset the device and enable web-based setup |
+| GPIO 22 | Relay 1 | Controls Relay Channel 1 |
+| GPIO 23 | Relay 2 | Controls Relay Channel 2 |
+
+### ℹ️ Notes
+- The reset function is evaluated at startup
+- The web interface is automatically managed by the LoopMax core
+- Designed for ESP32-based boards
 
 
 ---
