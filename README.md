@@ -119,6 +119,31 @@ The reset function can be triggered in the following ways:
 
 ---
 
+## Circuit
+
+<p align="center">
+  <img src="docs/img/CircuitZappy2ch.png" alt="LoopMax Embedded OS" width="600">
+</p>
+
+
+
+---
+
+## 🧱 3D Printed Enclosure
+
+A custom **3D-printable enclosure** is available for the Zappy 2ch module.
+
+The enclosure is designed to properly fit the electronics, provide safe cable routing, and allow easy access to buttons and connectors.
+
+👉 **Download the 3D model here:**  
+https://makerworld.com/en/models/2308490-zappy-2-lines#profileId-2520051
+
+### 🖨️ Printing Notes
+- Optimized for FDM printing
+- Recommended material: PLA or PETG
+
+---
+
 ## 🧩 Web UI (Bootstrap)
 
 <h5 align="center">Relè module (2ch)</h5>
