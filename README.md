@@ -139,7 +139,7 @@ A custom **3D-printable enclosure** is available for the Zappy 2ch module.
 The enclosure is designed to properly fit the electronics, provide safe cable routing, and allow easy access to buttons and connectors.
 
 👉 **Download the 3D model here:**  
-https://makerworld.com/en/models/2308490-zappy-2-lines#profileId-2520051
+https://makerworld.com/en/models/2308490-zappy-2-lines
 
 ### 🖨️ Printing Notes
 - Optimized for FDM printing
