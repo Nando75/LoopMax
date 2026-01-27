@@ -96,8 +96,11 @@ Below is an example of the structure of a single service:
   <img src="docs/img/logo_zappy.png" alt="LoopMax Embedded OS" width="600">
 </p>
 The **LoopMax** project includes the **Zappy 2ch** module, an application module designed to control a **two-channel relay board**.
+
 The application module interfaces directly with the dual-relay hardware, allowing remote control of connected loads through the LoopMax system.
+
 A **Bootstrap-based user interface** is included and **dynamically loaded by the LoopMax core**, providing a simple and responsive web interface for controlling the relays without requiring additional frontend configuration.
+
 
 ### 🔌 GPIO Pin Assignment
 The Zappy 2ch module uses the following GPIO pins:
