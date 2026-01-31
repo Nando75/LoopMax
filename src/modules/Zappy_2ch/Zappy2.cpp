@@ -74,17 +74,6 @@ void Zappy2::loop() {
         
 }
 
-
-/// @brief REGISTER TO LOGS EVENT FROM LoopMax Core
-/// @param logs from LoopMax core
-void Zappy2::publishLogs(const char* logs) {
-    
-   // _serial->printLn("MODULO: " + moduleData.name + " LOGS!");
-    //_serial->printLn(logs);
-
-}
-
-
 // ─────────────────────────────
 // Module Data (LOADED FROM LoopMax Core)
 // ─────────────────────────────
@@ -128,12 +117,30 @@ void Zappy2::initModuleData() {
     Helper::addPin(moduleData.pins, MODULE_PIN_0_NAME, MODULE_PIN_0_NUMBER, MODULE_PIN_0_MODE, PinLevel::High);
     Helper::addPin(moduleData.pins, MODULE_PIN_1_NAME, MODULE_PIN_1_NUMBER, MODULE_PIN_1_MODE, PinLevel::High);
     
-    /*
     //Registrazione Evento Logs
-    if(_logs)
-        _logs->registerSink(this);
-    */
+    //ctx->logs.registerSink(this);
+    //ctx->config.registerSink(this);
 }
+
+
+/// @brief REGISTER TO LOGS EVENT FROM LoopMax Core
+/// @param logs from LoopMax core
+void Zappy2::publishLogs(const char* logs) {
+    
+   // _serial->printLn("MODULO: " + moduleData.name + " LOGS!");
+    //_serial->printLn(logs);
+
+}
+
+
+/// @brief REGISTER TO SYSTEM RESET EVENT FROM LoopMax Core
+void Zappy2::onSystemReset() {
+
+
+}
+
+
+
 
 void Zappy2::initPins()
 {

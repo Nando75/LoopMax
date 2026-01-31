@@ -11,6 +11,8 @@
 #include "common/iservices/IConfig.h"
 #include "common/iservices/IWifi.h"
 #include "common/iservices/ILogSink.h"
+#include "common/iservices/IResetSink.h"
+
 #include "common/iservices/IWeb.h"
 
 namespace LoopMax::Services { struct ModuleContext; }
@@ -50,7 +52,7 @@ namespace LoopMax::Types {
 namespace LoopMax::Modules {
     using namespace Services;
 
-           class IModule : public Services::ILogSink {
+           class IModule : public Services::ILogSink, public Services::IResetSink {
                 public:
                     virtual void init(Services::ModuleContext* LoopMaxCore) = 0;
                     
@@ -67,6 +69,7 @@ namespace LoopMax::Modules {
 
                     virtual void registerEndpoints() = 0;
                     virtual void publishLogs(const char* logs) override = 0;
+                    virtual void onSystemReset() override = 0;
 
                     virtual ~IModule() = default;
                 };

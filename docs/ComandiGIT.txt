@@ -1,0 +1,30 @@
+1️⃣ Aggiungi il remote origin
+git remote add origin https://github.com/Nando75/LoopMax.git
+2️⃣ Controlla che sia stato aggiunto
+git remote -v
+Dovresti vedere:
+origin  https://github.com/Nando75/LoopMax.git (fetch)
+origin  https://github.com/Nando75/LoopMax.git (push)
+
+Prima di fare git add ., puoi vedere cosa ci sarebbe:
+git status
+
+✅ Se vuoi aggiungere SOLO alcuni file
+Non usare git add .
+Usa:
+git add README.md
+git add core/
+⚠️ E se voglio escludere file già aggiunti?
+Se hai già aggiunto file e poi li vuoi togliere, fai:
+git rm --cached nomefile
+E poi:
+git commit -m "Remove unwanted file"
+
+
+✅ STEP 3 — Crea il .gitignore
+In root del progetto crea un file chiamato:
+.gitignore
+Tutto quello che non è ignorato va su GitHub
+Tutto quello che è in .gitignore resta sul PC e NON va su GitHub
+inserire elenco file e cartelle da escludere su git, tipo:
+

@@ -13,9 +13,6 @@ namespace LoopMax::Core::Hal {
         virtual PinMode pinMode() const = 0;
         virtual void Reset() = 0;
         
-        
-        //virtual void initContext(SystemContext* ctx) = 0;
-
         virtual ~IHal_Reset() {}
     };
 

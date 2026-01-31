@@ -37,10 +37,27 @@ namespace LoopMax::Core {
                 std::string TimeManager::Timezone()  { return _timer.Timezone(); }
                 int64_t TimeManager::Tz_Offset()  { return _timer.Tz_Offset(); }
 
+                
+                /*
                 void TimeManager::setUnix(int64_t unix)  { 
+                    
                     _timer.setUnix(unix); 
+                    
+                    
                     ctx->logs.write("Internet Time syncronized.", LogType::INFO, name(), icon());
                 }
+                */
+
+                void TimeManager::setUnix(int64_t unix) {
+                    struct timeval tv;
+                    tv.tv_sec = unix;
+                    tv.tv_usec = 0;
+                    settimeofday(&tv, nullptr);   // <--- QUESTA È LA CHIAVE
+
+                    _timer.setUnix(unix);
+                    ctx->logs.write("Internet Time syncronized.", LogType::INFO, name(), icon());
+                }
+
 
                 void TimeManager::setTimezone(const std::string& tz)  { _timer.setTimezone(tz); }
                 void TimeManager::setTzOffset(int64_t offset)  { _timer.setTzOffset(offset); }

@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <common/types.h>
 #include "common/IModule.h"
+#include "common/iservices/IResetSink.h"
+
 namespace LoopMax::Core::Hal {
     
     using namespace Types;
@@ -51,7 +53,8 @@ namespace LoopMax::Core::Hal {
 
 
 
-            //virtual void initContext(SystemContext* ctx) = 0;
+            virtual  void registerSink(Services::IResetSink* sink) = 0;
+            
             virtual ~IHal_Config() = default;
             
         };

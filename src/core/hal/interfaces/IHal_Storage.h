@@ -18,7 +18,9 @@ namespace LoopMax::Core::Hal {
         virtual bool getFile(const std::string &path, std::string &outData) = 0;
         virtual bool saveFile(const std::string &path, const std::string &data) = 0;
 
-      
+        virtual bool getNVSConfig(const std::string &name, std::string &outData) = 0;
+        virtual bool saveNVSConfig(const std::string &name, const std::string &data) = 0;
+
 
         //virtual void initContext(SystemContext* ctx) = 0;
     };

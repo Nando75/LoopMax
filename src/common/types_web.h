@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <cstring>
+#include <vector>
 #include <functional>
 #include "IHttpContext.h"
 
@@ -74,6 +75,13 @@ namespace LoopMax::Types {
                 int code;
                 std::string body;
             };
+
+            struct HttpsBinaryResponse {
+                int code;
+                std::vector<uint8_t> data;
+                std::string error;
+            };
+
 
 
             //HTTPS:

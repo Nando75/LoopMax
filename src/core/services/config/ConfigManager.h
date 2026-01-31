@@ -5,7 +5,7 @@
 #include "core/services/IService.h"
 #include "common/iservices/IConfig.h"
 #include "core/hal/interfaces/IHal_Config.h"
-//#include "core/SystemContext.h"
+#include "common/iservices/IResetSink.h"
 
 
 #include "core/services/time/TimeManager.h"
@@ -64,7 +64,10 @@ namespace LoopMax {
                     bool removeConfig(const std::string& moduleName) override;
 
                     bool resetSystem();
-                    
+                    std::string getKey() override { return _settings.key; }
+
+                    //IResetSink
+                    void registerSink(Services::IResetSink* sink) override;
                     
 
                 private:
@@ -75,7 +78,7 @@ namespace LoopMax {
                     std::vector<WebCommand> _webCommands;
                     const char* devFileName = "/loopmax_config.json";
                     const char* modFileName = "/loopmax_modules.json";
-                    
+
                     
                     StorageResult loadMainConfig();
                     void buildJsonConfig(std::string &outJson);
@@ -89,7 +92,7 @@ namespace LoopMax {
                     std::vector<const char*> _deps;
                     std::string buildModuleFile(std::string moduleName, std::vector<modulePin> pins, std::string JsonConfig);
                     
-
+                    std::vector<Services::IResetSink*> sinks;
 
                 };
 

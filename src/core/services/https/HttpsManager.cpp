@@ -48,6 +48,12 @@ namespace LoopMax::Core {
                     return _https.request(httpsData, body, method, contentType); 
                 }
 
+                bool HttpsManager::downloadFile(Types::HttpsData httpsData,const std::string& body,Types::WMethod method,const std::string& contentType, std::function<bool(uint8_t*, size_t)> onChunk)
+                {
+                    if(ctx->system.mode() != SystemMode::LAN) return false;
+                    return _https.downloadFile(httpsData, body, method, contentType, onChunk); 
+                }
+
                 
 
 

@@ -27,9 +27,10 @@ namespace LoopMax::Modules {
         void registerEndpoints() override;
         void publishLogs(const char* logs) override;
 
+        void onSystemReset() override;
+
         // Module data
         void initModuleData();
-        //void registerEndpoints();
         Types::IModuleData& Data() override;
 
     private:

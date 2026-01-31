@@ -8,9 +8,13 @@ data_copy/
 lib/
 test/
 
+# PRIVATE CLASS
+src/modules/security
+src/modules/SmartiLabApi
+
 # PRIVATE MODULES
 src/modules/Zappy_4ch
 
 # PRIVATE CONFIGS
-data/loopmax_config.json
-data/loopmax_modules.json
+# data/loopmax_config.json
+# data/loopmax_modules.json

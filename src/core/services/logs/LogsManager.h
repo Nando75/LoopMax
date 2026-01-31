@@ -40,7 +40,7 @@ namespace LoopMax::Core {
                     //std::vector<LogEntry>& getLogs() const  override;
                     const std::vector<LogEntry>& getLogs() const override;
 
-                    //ISink
+                    //ILogsSink
                     void registerSink(Services::ILogSink* sink) override;
                     
                     std::mutex& getMutex() const override { return _logsMutex; }

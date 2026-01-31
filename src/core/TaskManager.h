@@ -41,7 +41,7 @@ namespace LoopMax {
                             void taskMonitor();
                             void taskComponents();
                             // Monitor dei task
-                            void monitorTasks();
+                            //void monitorTasks();
                         #endif
                             
                             private:
@@ -66,22 +66,12 @@ namespace LoopMax {
                                 
 
                                 LoopMax::Services::ModuleContext* mdx; 
-                                
-                                void loopService(Core::IService* service);
-
-                            
                                                 
                                 Core::Hal::IHal_Task* task_main;
                                 Core::Hal::IHal_Task* task_network;
                                 Core::Hal::IHal_Task* task_monitor;
                                 Core::Hal::IHal_Task* task_components;
-
-                            
-                            
-                            //std::vector<IService*> services;
-                            //void registerService(IService* service);
-                            //const std::vector<IService*>& getServices() const { return services; }
-
+                                bool modStarted = false;
 
                         };
 

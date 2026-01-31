@@ -1,0 +1,22 @@
+{
+   "modules":[
+      {
+         "name":"Zappy2",
+         "pins":[
+            {
+               "number":22,
+               "name":"Pc",
+               "level":0
+            },
+            {
+               "number":23,
+               "name":"Light",
+               "level":0
+            }
+            
+         ],
+
+         "payload": {"DeviceName" : "DeskElectricalOutlets" } 
+      }
+   ]
+}

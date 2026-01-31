@@ -28,12 +28,10 @@ namespace LoopMax::Core::Hal {
 
     private:
         Types::MqttsData* _config = nullptr;
-
-        WiFiClientSecure _client;
-        PubSubClient _mqtt{_client};
-
+         WiFiClientSecure _client;
+         PubSubClient* _mqtt;
         Types::MqttCallback _callback = nullptr;
-
         void _internalCallback(char* topic, byte* payload, unsigned int length);
+
     };
 }

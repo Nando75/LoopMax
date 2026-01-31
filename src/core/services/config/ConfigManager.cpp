@@ -44,7 +44,10 @@ namespace LoopMax::Core {
                 StorageResult ConfigManager::loadMainConfig()
                 {
                     std::string configFile;
-                    bool exists = ctx->storage.getFile(devFileName, configFile);
+                    //bool exists = ctx->storage.getFile(devFileName, configFile);
+                    bool exists = ctx->storage.getNVSConfig("device", configFile);
+
+
                     bool isCorrect = true;
 
                     //Carico l'hostname dal primo modulo:
@@ -84,25 +87,20 @@ namespace LoopMax::Core {
 
 
                 void ConfigManager::buildJsonConfig(std::string &outJson)
-                {
-                    outJson.clear();
-                    const std::string apSsidCopy = _settings.apSsid;
-                    const std::string apPswCopy   = _settings.apPsw;
-                    const std::string modeCopy    = SystemModeToStr(_settings.mode);
-                    const std::string keyCopy     = _settings.key;
-                    const std::string wfSsidCopy  = _settings.wfSsid;
-                    const std::string wfPswCopy   = _settings.wfPsw;
-                    JsonDocument doc;
-                    JsonObject device = doc["device"].to<JsonObject>();
-                    device["apSsid"]    = apSsidCopy;
-                    device["apPsw"]    = apPswCopy;
-                    device["mode"]     = modeCopy;
-                    device["key"]      = keyCopy;
-                    device["wfSsid"]   = wfSsidCopy;
-                    device["wfPsw"]    = wfPswCopy;
-                    outJson.reserve(256);
-                    serializeJson(doc, outJson);
-                }
+                    {
+                        outJson.clear();
+                        JsonDocument doc;
+                        JsonObject device = doc["device"].to<JsonObject>();
+                        device["apSsid"]  = _settings.apSsid;
+                        device["apPsw"]   = _settings.apPsw;
+                        device["mode"]    = SystemModeToStr(_settings.mode);
+                        device["key"]     = _settings.key;
+                        device["wfSsid"]  = _settings.wfSsid;
+                        device["wfPsw"]   = _settings.wfPsw;
+                        outJson.reserve(256);
+                        serializeJson(doc, outJson);
+                    }
+
 
 
                bool ConfigManager::loadJsonConfigFile(const std::string &jsonData)
@@ -173,7 +171,8 @@ namespace LoopMax::Core {
                 std::string configFile;
                 buildJsonConfig(configFile);
                 //Save default config:
-                return ctx->storage.saveFile(devFileName, configFile);
+                //return ctx->storage.saveFile(devFileName, configFile);
+                return ctx->storage.saveNVSConfig("device",configFile);
             }
 
            std::string ConfigManager::buildTimeJson() {
@@ -197,82 +196,82 @@ namespace LoopMax::Core {
 
 
 
-                        std::string ConfigManager::buildSystemJson(bool isLogged) {
-                            JsonDocument doc;
+        std::string ConfigManager::buildSystemJson(bool isLogged) {
+            JsonDocument doc;
 
-                            JsonObject sys = doc["system"].to<JsonObject>();
+            JsonObject sys = doc["system"].to<JsonObject>();
 
-                            sys["debug"]        = IS_DEBUG;
-                            sys["name"]         = _settings.name;
-                            sys["key"]          = _settings.key;
-                            sys["FwVersion"]    = _settings.FwVersion;
-                            sys["Company"]      = _settings.Company;
-                            sys["url"]          = _settings.CompanyUrl;
+            sys["debug"]        = IS_DEBUG;
+            sys["name"]         = _settings.name;
+            sys["key"]          = _settings.key;
+            sys["FwVersion"]    = _settings.FwVersion;
+            sys["Company"]      = _settings.Company;
+            sys["url"]          = _settings.CompanyUrl;
 
-                            sys["core"]         = ctx->system.ChipCores();
-                            sys["chipRevision"] = ctx->system.ChipRevision();
-                            sys["cpuFreq"]      = ctx->system.CpuFreq();
-                            sys["flashSize"]    = ctx->system.FlashSize();
-                            sys["flashSpeed"]   = ctx->system.FlashSpeed();
-                            sys["heapSize"]     = ctx->system.HeapSize();
-                            sys["heapFree"]     = ctx->system.FreeHeap();
-                            sys["uptime"]       = ctx->system.uptime();
-                            sys["api"]       = ctx->system.Api();
-                            sys["apiVersion"]       = ctx->system.ApiVersion();
-                            const char* modelPtr = ctx->system.ChipModel();
-                            const char* modePtr  = SystemModeToStr(ctx->system.mode());
-                            sys["chipModel"]    = modelPtr ? modelPtr : "unknown";
-                            sys["mode"]         = modePtr ? modePtr : "unknown";
-                            sys["isLogged"]     = isLogged;
-                            std::string out;
-                            out.reserve(512);
-                            serializeJson(doc, out);
-                            return out;
-                        }
-
-
+            sys["core"]         = ctx->system.ChipCores();
+            sys["chipRevision"] = ctx->system.ChipRevision();
+            sys["cpuFreq"]      = ctx->system.CpuFreq();
+            sys["flashSize"]    = ctx->system.FlashSize();
+            sys["flashSpeed"]   = ctx->system.FlashSpeed();
+            sys["heapSize"]     = ctx->system.HeapSize();
+            sys["heapFree"]     = ctx->system.FreeHeap();
+            sys["uptime"]       = ctx->system.uptime();
+            sys["api"]       = ctx->system.Api();
+            sys["apiVersion"]       = ctx->system.ApiVersion();
+            const char* modelPtr = ctx->system.ChipModel();
+            const char* modePtr  = SystemModeToStr(ctx->system.mode());
+            sys["chipModel"]    = modelPtr ? modelPtr : "unknown";
+            sys["mode"]         = modePtr ? modePtr : "unknown";
+            sys["isLogged"]     = isLogged;
+            std::string out;
+            out.reserve(512);
+            serializeJson(doc, out);
+            return out;
+        }
 
 
 
-                    std::string ConfigManager::buildLogsJson() {
-                        JsonDocument doc;
 
-                        JsonObject logsObj = doc["logs"].to<JsonObject>();
 
-                        // --- types ---
-                        JsonArray typesArr = logsObj["types"].to<JsonArray>();
-                        for (const auto& t : ctx->logs.logTypes()) {
-                            JsonObject typeEntry = typesArr.add<JsonObject>();
-                            typeEntry["id"]   = static_cast<int>(t.type);
-                            typeEntry["name"] = t.name;
-                            typeEntry["icon"] = t.icon;
-                        }
+        std::string ConfigManager::buildLogsJson() {
+            JsonDocument doc;
 
-                        // --- list ---
-                        JsonArray listArr = logsObj["list"].to<JsonArray>();
-                        {
-                            std::lock_guard<std::mutex> lock(ctx->logs.getMutex());
-                            const auto& logsVector = ctx->logs.getLogs();
+            JsonObject logsObj = doc["logs"].to<JsonObject>();
 
-                            for (const auto& l : logsVector) {
-                                if (l.message.empty()) continue;
+            // --- types ---
+            JsonArray typesArr = logsObj["types"].to<JsonArray>();
+            for (const auto& t : ctx->logs.logTypes()) {
+                JsonObject typeEntry = typesArr.add<JsonObject>();
+                typeEntry["id"]   = static_cast<int>(t.type);
+                typeEntry["name"] = t.name;
+                typeEntry["icon"] = t.icon;
+            }
 
-                                JsonObject e = listArr.add<JsonObject>();
-                                e["millis"] = l.millis;
-                                e["type"]   = l.logType;
-                                e["icon"]   = l.logIcon;
-                                e["msg"]    = l.message;
-                                e["src"]    = l.source;
-                                e["sIcon"]  = l.sourceIcon;
-                                e["pld"]    = l.payload;
-                            }
-                        }
+            // --- list ---
+            JsonArray listArr = logsObj["list"].to<JsonArray>();
+            {
+                std::lock_guard<std::mutex> lock(ctx->logs.getMutex());
+                const auto& logsVector = ctx->logs.getLogs();
 
-                        std::string out;
-                        out.reserve(2048);
-                        serializeJson(doc, out);
-                        return out;
-                    }
+                for (const auto& l : logsVector) {
+                    if (l.message.empty()) continue;
+
+                    JsonObject e = listArr.add<JsonObject>();
+                    e["millis"] = l.millis;
+                    e["type"]   = l.logType;
+                    e["icon"]   = l.logIcon;
+                    e["msg"]    = l.message;
+                    e["src"]    = l.source;
+                    e["sIcon"]  = l.sourceIcon;
+                    e["pld"]    = l.payload;
+                }
+            }
+
+            std::string out;
+            out.reserve(2048);
+            serializeJson(doc, out);
+            return out;
+        }
 
 
 
@@ -506,12 +505,18 @@ namespace LoopMax::Core {
 
                 bool ConfigManager::resetSystem()
                 {
-                            _settings.apSsid = "LoopMaxAP" + std::to_string(Helper::getRandomNumber(1000));
-                            _settings.apPsw = "loopmaxap";
-                            _settings.mode = SystemMode::AP;
-                            _settings.wfSsid     = "";
-                            _settings.wfPsw      = "";
-                            return this->saveConfig();
+                        
+                    for (auto* sink : sinks) {
+                        if (sink) sink->onSystemReset();
+                    }
+
+
+                    _settings.apSsid = "LoopMaxAP" + std::to_string(Helper::getRandomNumber(1000));
+                    _settings.apPsw = "loopmaxap";
+                    _settings.mode = SystemMode::AP;
+                    _settings.wfSsid     = "";
+                    _settings.wfPsw      = "";
+                    return this->saveConfig();
                 }
                 
 
@@ -871,6 +876,10 @@ namespace LoopMax::Core {
                 }
 
 
+                //ILogSink
+                void ConfigManager::registerSink(Services::IResetSink* sink) {
+                    sinks.push_back(sink);
+                }
 
 
 

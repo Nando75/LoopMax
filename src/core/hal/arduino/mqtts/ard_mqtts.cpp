@@ -4,19 +4,26 @@ namespace LoopMax::Core::Hal {
 
             void ard_mqtts::begin(Types::MqttsData& config) {
                 _config = &config;
-
+                /*
                 if (_config->Mqtts_UseCA && !_config->Mqtts_CA.empty()) {
                     _client.setCACert(_config->Mqtts_CA.c_str());
+                    //_client.setCACert(mqtt_ca_cert);
+
                 } else {
-                    _client.setInsecure();
+                    _client.setInsecure();    
                 }
+                */
+                _client.setInsecure();
 
-                _mqtt.setServer(
-                    _config->Mqtts_Server.c_str(),
-                    _config->Mqtts_Port
-                );
+                _client.setTimeout(_config->Mqtts_TimeOut);
+                _mqtt = new PubSubClient(_client);
 
-                _mqtt.setCallback(
+                
+
+                _mqtt->setServer(_config->Mqtts_Server.c_str(), _config->Mqtts_Port);
+                //_mqtt->setServer("smartilab.it", _config->Mqtts_Port);
+                _mqtt->setKeepAlive(60);
+                _mqtt->setCallback(
                     [this](char* t, byte* p, unsigned int l) {
                         _internalCallback(t, p, l);
                     }
@@ -25,17 +32,21 @@ namespace LoopMax::Core::Hal {
 
             bool ard_mqtts::connect() {
                 if (!_config) return false;
-                if (_mqtt.connected()) return true;
-
-                return _mqtt.connect(
-                    "esp32-client",
+                if (_mqtt->connected()) return true;
+                //Serial.println(_config->Mqtts_UniqueId.c_str());
+                //Serial.println(_config->Mqtts_User.c_str());
+                //Serial.println(_config->Mqtts_Psw.c_str());
+               return _mqtt->connect(
+                    _config->Mqtts_UniqueId.c_str(),
                     _config->Mqtts_User.c_str(),
                     _config->Mqtts_Psw.c_str()
                 );
             }
 
             void ard_mqtts::disconnect() {
-                _mqtt.disconnect();
+                if (_mqtt->connected()) {
+                    _mqtt->disconnect();
+                }
             }
 
             bool ard_mqtts::publish(
@@ -43,17 +54,13 @@ namespace LoopMax::Core::Hal {
                 const std::string& payload,
                 bool retained
             ) {
-                if (!_mqtt.connected()) return false;
-                return _mqtt.publish(
-                    topic.c_str(),
-                    payload.c_str(),
-                    retained
-                );
+                if (!_mqtt->connected()) return false;
+                return _mqtt->publish(topic.c_str(), payload.c_str(), retained);
             }
 
             bool ard_mqtts::subscribe(const std::string& topic) {
-                if (!_mqtt.connected()) return false;
-                return _mqtt.subscribe(topic.c_str());
+                if (!_mqtt->connected()) return false;
+                return _mqtt->subscribe(topic.c_str());
             }
 
             void ard_mqtts::onMessage(Types::MqttCallback cb) {
@@ -61,13 +68,13 @@ namespace LoopMax::Core::Hal {
             }
 
             void ard_mqtts::tick() {
-                if (_mqtt.connected()) {
-                    _mqtt.loop();
+                if (_mqtt && _mqtt->connected()) {
+                    _mqtt->loop();
                 }
             }
 
             bool ard_mqtts::isConnected() {
-                return _mqtt.connected();
+                return _mqtt->connected();
             }
 
             void ard_mqtts::_internalCallback(
@@ -85,6 +92,7 @@ namespace LoopMax::Core::Hal {
 
                 _callback(topic, msg);
             }
+
 
 }
 
@@ -176,19 +184,19 @@ callback → registrante
 Micro-consigli (se vuoi rifinirla)
 🔹 ID client dinamico
 String id = "esp32-" + String(ESP.getEfuseMac(), HEX);
-_mqtt.connect(id.c_str(), ...);
+_mqtt->connect(id.c_str(), ...);
 
 
 
 🔹 Reconnect automatico (nel loop)
-if (!_mqtt.connected()) {
+if (!_mqtt->connected()) {
     connect();
 }
 
 
 
 🔹 LWT
-_mqtt.connect(id, user, psw, "status", 0, true, "offline");
+_mqtt->connect(id, user, psw, "status", 0, true, "offline");
 È un messaggio che il broker MQTT pubblica AUTOMATICAMENTE se il client:
 
 si disconnette in modo anomalo
@@ -203,7 +211,7 @@ muore senza chiamare disconnect()
 
 👉 NON viene pubblicato se fai disconnect() volontariamente.
 Esempio reale con PubSubClient
-_mqtt.connect(
+_mqtt->connect(
     clientId,
     user,
     password,
@@ -216,7 +224,7 @@ Se l’ESP32 crasha → il broker pubblica:
 devices/esp32_01/status = "offline"
 Poi TU pubblichi “online” manualmente
 Subito dopo la connessione riuscita:
-_mqtt.publish(
+_mqtt->publish(
     "devices/esp32_01/status",
     "online",
     true
@@ -228,11 +236,11 @@ Come usarlo nella TUA architettura
 Nel tuo ard_mqtts::connect():
 bool ard_mqtts::connect() {
     if (!_config) return false;
-    if (_mqtt.connected()) return true;
+    if (_mqtt->connected()) return true;
 
     std::string clientId = "loopmax-" + std::to_string(ESP.getEfuseMac());
 
-    bool ok = _mqtt.connect(
+    bool ok = _mqtt->connect(
         clientId.c_str(),
         _config->Mqtts_User.c_str(),
         _config->Mqtts_Psw.c_str(),
@@ -243,7 +251,7 @@ bool ard_mqtts::connect() {
     );
 
     if (ok) {
-        _mqtt.publish("devices/status", "online", true);
+        _mqtt->publish("devices/status", "online", true);
     }
 
     return ok;

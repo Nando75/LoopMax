@@ -221,44 +221,7 @@ namespace LoopMax::Core {
 
                     }
 
-                    /*
-                    void WifiManager::checkPublicIp()
-                    {
-
-                        if(this->sincIP || !_wifi.isConnected() || ctx->system.mode() != SystemMode::LAN)
-                        { return; }
-                        //httpsConfig.Https_ApiUrl   = "api.ipify.org";
-                        httpsConfig.Https_ApiUrl   = SERVER_INFO;
-                        
-                        httpsConfig.Https_Port     = 443;
-                        httpsConfig.Https_UseCA    = false;
-                        httpsConfig.Https_TimeOut  = 5000;
-
-                        // 4) Richiesta (torna HttpsResponse)
-                        auto res = ctx->https.request(httpsConfig, "", WMethod::GET, "");
-
-                        // 6) Controllo codice HTTP
-                        if (res.code != 200) {
-                            ctx->logs.write("Https request failed", LogType::WARNING, name(), icon());
-                            return;
-                        }
-
-                        // 7) Controllo body
-                        if (res.body.empty()) {
-                            ctx->logs.write("Wrong public ip", LogType::WARNING, name(), icon());
-                            return;
-                        }
-
-
-                                                                       
-                       _publicIp = res.body;
-                       this->sincIP = true;
-                       if(!_publicIp.empty() && _publicIp.length()>6) _internet = true;
-                       ctx->logs.write("Internet is Active ! public ip: " + res.body, LogType::INFO, name(), icon());
-
-                    }
-                    */
-
+                   
                     void WifiManager::checkPublicIp()
                     {
                         if (this->sincIP || !_wifi.isConnected() || ctx->system.mode() != SystemMode::LAN)

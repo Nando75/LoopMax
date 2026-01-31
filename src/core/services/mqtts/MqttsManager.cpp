@@ -34,7 +34,7 @@ namespace LoopMax::Core {
                 }
 
                 void MqttsManager::loop() { 
-
+                    _mqtts.tick();
                  }
 
                 void MqttsManager::stop() { 

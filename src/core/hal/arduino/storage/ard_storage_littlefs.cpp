@@ -59,4 +59,36 @@ namespace LoopMax::Core::Hal {
         return true;
     }
 
+
+    // Ritorna true se esiste e contiene qualcosa
+    bool ard_storage_littlefs::getNVSConfig(const std::string &name, std::string &outData)
+    {
+        prefs.begin("config", true); // apertura in read-only
+        String temp = prefs.getString(name.c_str(), ""); // ritorna "" se non esiste
+        prefs.end();
+
+        if (temp.length() == 0) {
+            outData.clear();
+            return false; // non esiste o vuoto
+        }
+
+        outData = std::string(temp.c_str());
+        return true; // esiste ed è non vuoto
+    }
+
+    // Ritorna true se scrittura OK
+    bool ard_storage_littlefs::saveNVSConfig(const std::string &name, const std::string &data)
+    {
+        prefs.begin("config", false); // apertura in write
+        // putString ritorna void, quindi verifichiamo la lunghezza scritta
+        prefs.putString(name.c_str(), data.c_str());
+        prefs.end();
+
+        return !data.empty(); // ritorna false se stai salvando una stringa vuota
+    }
+
+
+
+
+
 }

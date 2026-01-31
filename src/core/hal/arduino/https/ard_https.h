@@ -9,9 +9,19 @@ namespace LoopMax::Core::Hal {
 
     public:
         Types::HttpsResponse request(Types::HttpsData httpsData, const std::string& body,Types::WMethod method,const std::string& contentType) override;
+        bool downloadFile(Types::HttpsData httpsData,
+                  const std::string& body,
+                  Types::WMethod method,
+                  const std::string& contentType,
+                  std::function<bool(uint8_t*, size_t)> onChunk) override;
+
+
+
+
 
     private:
         Types::HttpsData _httpsData;
+        
         
     
     };

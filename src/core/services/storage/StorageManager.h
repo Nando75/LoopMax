@@ -35,6 +35,9 @@ namespace LoopMax {
                     bool getFile(const std::string &path, std::string &outData) override {  return _storage.getFile(path, outData); }
                     bool saveFile(const std::string &path, const std::string &data) override {  return _storage.saveFile(path,data); }
 
+                    bool getNVSConfig(const std::string &name, std::string &outData) override {  return _storage.getNVSConfig(name,outData); }
+                    bool saveNVSConfig(const std::string &name, const std::string &data) override {  return _storage.saveNVSConfig(name,data); }
+
                 private:
                     Types::ServiceState currentState = Types::ServiceState::READY;
                     const std::vector<Types::SystemMode> _modes = { Types::SystemMode::AP, Types::SystemMode::LAN };

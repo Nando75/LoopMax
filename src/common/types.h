@@ -280,9 +280,15 @@ namespace LoopMax::Types {
             bool Mqtts_UseCA = false;
             std::string Mqtts_Server = "";
             uint32_t Mqtts_Port = 80;
+            std::string Mqtts_UniqueId = "";
             std::string Mqtts_User = "";
             std::string Mqtts_Psw = "";
             std::string Mqtts_CA = "";
+            uint32_t Mqtts_Qos = 0;
+            uint32_t Mqtts_Retain = 0;
+            std::string Mqtts_BaseTopic = "";
+            uint32_t Mqtts_TimeOut = 0;   
+
         };
         
         using MqttCallback = std::function<void(

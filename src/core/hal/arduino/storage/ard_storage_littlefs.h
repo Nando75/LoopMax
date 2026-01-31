@@ -2,6 +2,7 @@
 #include "core/hal/interfaces/IHal_Storage.h"
 #include <LittleFS.h>
 #include <string>
+#include <Preferences.h>
 
 namespace LoopMax::Core::Hal {
 
@@ -15,8 +16,12 @@ namespace LoopMax::Core::Hal {
         bool getFile(const std::string &path, std::string &outData);
         bool saveFile(const std::string &path, const std::string &data);
 
+        bool getNVSConfig(const std::string &name, std::string &outData) override;
+        bool saveNVSConfig(const std::string &name, const std::string &data) override;
+
     private:
         bool _ready = false;
+        Preferences prefs;
     };
 
 }

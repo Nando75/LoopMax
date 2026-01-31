@@ -20,6 +20,9 @@ namespace LoopMax::Core::Hal {
             bool getFile(const std::string &path, std::string &outData);
             bool saveFile(const std::string &path, const std::string &data);
 
+            bool getNVSConfig(const std::string &name, std::string &outData) { return true; }
+            bool saveNVSConfig(const std::string &name, const std::string &data) { return true; }
+
         private:
             bool _ready = false;
     
