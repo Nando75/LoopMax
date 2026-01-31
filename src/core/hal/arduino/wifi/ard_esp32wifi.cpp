@@ -12,28 +12,27 @@ namespace LoopMax::Core::Hal {
 
                          switch (event) {
                                 case ARDUINO_EVENT_WIFI_AP_STACONNECTED:
-                                    Serial.println("[WiFi] AP client connected");
+                                    ////Serial.println("[WiFi] AP client connected");
                                     //startDns();
                                     break;
                                 case ARDUINO_EVENT_WIFI_AP_STADISCONNECTED:
-                                    Serial.println("[WiFi] AP client disconnected");
+                                    //Serial.println("[WiFi] AP client disconnected");
                                     //stopDns();
                                     WiFi.reconnect();
                                     break;
 
                                 case ARDUINO_EVENT_WIFI_STA_CONNECTED:
-                                    Serial.println("[WiFi] STA_CONNECTED");
+                                    //Serial.println("[WiFi] STA_CONNECTED");
                                     break;
                                 case ARDUINO_EVENT_WIFI_STA_GOT_IP:
-                                    Serial.print("[WiFi] GOT_IP: ");
-                                    Serial.println(WiFi.localIP());
+                                    //Serial.print("[WiFi] GOT_IP: ");
+                                    //Serial.println(WiFi.localIP());
                                     break;
                                 case ARDUINO_EVENT_WIFI_STA_LOST_IP:
-                                    Serial.println("[WiFi] LOST_IP");
+                                    //Serial.println("[WiFi] LOST_IP");
                                       break;
                                 case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
-                                    Serial.printf("[WiFi] DISCONNECTED reason=%d\n",
-                                                info.wifi_sta_disconnected.reason);
+                                    //Serial.printf("[WiFi] DISCONNECTED reason=%d\n",info.wifi_sta_disconnected.reason);
                                     break;
                             }
 
@@ -308,7 +307,7 @@ namespace LoopMax::Core::Hal {
                 dns.start(53, "*", _ip);
                 _dnsActive = true;
                 _dnsStart = millis();
-                Serial.println("[DNS CAPTIVE] STARTED");
+                //Serial.println("[DNS CAPTIVE] STARTED");
                 */
             }
 
@@ -319,7 +318,7 @@ namespace LoopMax::Core::Hal {
                 /*
                 dns.stop();
                 _dnsActive = false;
-                   Serial.println("[DNS CAPTIVE] STOPPED");
+                   //Serial.println("[DNS CAPTIVE] STOPPED");
                    */
                 
             }
@@ -332,7 +331,7 @@ namespace LoopMax::Core::Hal {
                 if (MDNS.begin(_hostname.c_str())) {
                     MDNS.addService("http", "tcp", 80);    
                     _mdnsActive = true;
-                    Serial.println("[MDNS] STARTED");
+                    //Serial.println("[MDNS] STARTED");
                 }
                 
             }
@@ -345,7 +344,7 @@ namespace LoopMax::Core::Hal {
               if (!_mdnsActive) return;
               MDNS.end();
               _mdnsActive = false;
-              Serial.println("[MDNS] STOPPPED");
+              //Serial.println("[MDNS] STOPPPED");
             }
 
 

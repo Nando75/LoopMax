@@ -1,5 +1,5 @@
 #pragma once 
-#include "common/types_web.h"
+#include "common/types.h"
 namespace LoopMax::Services {
     class IHttps {
     public:

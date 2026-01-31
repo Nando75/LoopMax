@@ -22,12 +22,12 @@ void Zappy2::init(Services::ModuleContext* context)
     ctx = context;
     initModuleData();
     initPins();
-    if(ctx->config.ExistSavedConfig(moduleData.Name))
+    if(ctx->config.ExistSavedConfig(moduleData))
     {
       //ctx->serial.printLn("DATA EXIST");
       //ctx->serial.printLn("PRIMA");
       //printPins();
-      ctx->config.loadConfig(moduleData.Name,moduleData.pins,moduleData.JsonConfig);
+      ctx->config.loadConfig(moduleData);
       this->loadJsonPayload();
       //ctx->serial.printLn("DOPO");
       //printPins();
@@ -35,7 +35,7 @@ void Zappy2::init(Services::ModuleContext* context)
     else
     {
         //ctx->serial.print("DATA NOT EXIST -- SAVE:");
-        ctx->serial.printLn(ctx->config.saveModuleConfig(moduleData.Name,moduleData.pins,moduleData.JsonConfig));
+        ctx->serial.printLn(ctx->config.saveModuleConfig(moduleData));
         //printPins();
     }
 
@@ -152,19 +152,29 @@ void Zappy2::initPins()
 
 
 bool Zappy2::loadJsonPayload() {
+
+    /*
+    //HERE CUSTOM MOUDLE JSON EXTRA:
     JsonDocument doc;
     if (deserializeJson(doc, moduleData.JsonConfig)) return false;
-    if (!doc["DeviceName"]) return false;
+    if (!doc["param1"]) return false;
     moduleData.DeviceName = doc["DeviceName"].as<std::string>();
+
+    */
+
+
     return true;
 }
 
 
 void Zappy2::buildJsonPayload(std::string& out) {
+    /*
+    //HERE CUSTOM MOUDLE JSON EXTRA:
     JsonDocument doc;
     doc["DeviceName"] = moduleData.DeviceName;
     out.clear();
     serializeJson(doc, out);
+    */
 }
 
 
@@ -245,7 +255,7 @@ void Zappy2::printPins()
                         this->buildJsonPayload(moduleData.JsonConfig);
 
                         //SAVE JSON DATA:
-                        bool res = ctx->config.saveModuleConfig(moduleData.Name,moduleData.pins,moduleData.JsonConfig);
+                        bool res = ctx->config.saveModuleConfig(moduleData);
                         ctx->serial.printLn(moduleData.JsonConfig);
                         
                         if(res) httpCtx.send(200, "text/plain", "ok");
@@ -276,7 +286,7 @@ void Zappy2::printPins()
             if(found)
              { 
                 //SAVE DATA
-                return ctx->config.saveModuleConfig(moduleData.Name,moduleData.pins,moduleData.JsonConfig); 
+                return ctx->config.saveModuleConfig(moduleData); 
              }
             
             return false;
@@ -309,7 +319,7 @@ void Zappy2::printPins()
                         ctx->pins.write(pin.number, pin.level);
                         //SAVE DATA
                         this->printPins();
-                        return ctx->config.saveModuleConfig(moduleData.Name,moduleData.pins,moduleData.JsonConfig); 
+                        return ctx->config.saveModuleConfig(moduleData); 
                     }
 
                 }

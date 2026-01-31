@@ -671,25 +671,24 @@ namespace LoopMax::Core {
 
                 bool ConfigManager::isReady() const { return ctx->storage.isReady(); }
 
-              bool ConfigManager::ExistSavedConfig(const std::string& moduleName) {
-                    if (moduleName.empty())
-                        return false;
-
+              bool ConfigManager::ExistSavedConfig(IModuleData& moduleData) {
+                    if(moduleData.Name.empty()) return false;
                     std::string jsonFileModules;
                     if (!ctx->storage.getFile(modFileName, jsonFileModules))
                         return false;
-
                     JsonDocument doc;
                     if (deserializeJson(doc, jsonFileModules))
                         return false;
-
                     JsonArray modules = doc["modules"].as<JsonArray>();
                     if (modules.isNull())
                         return false;
-
                     for (JsonObject mod : modules) {
-                        if (mod["name"] == moduleName)
-                            return true;
+                        if (mod["name"] == moduleData.Name)
+                        {
+                            const char* deviceName = mod["deviceName"];
+                            return (deviceName && deviceName[0] != '\0');
+
+                        }
                     }
 
                     return false;
@@ -697,10 +696,8 @@ namespace LoopMax::Core {
 
 
 
-                    void ConfigManager::loadConfig(const std::string& moduleName,
-                                                std::vector<modulePin>& pins,
-                                                std::string& JsonConfig) {
-                        if (moduleName.empty()) return;
+                    void ConfigManager::loadConfig(IModuleData& moduleData) {
+                        if(moduleData.Name.empty()) return;
 
                         std::string jsonFileModules;
                         if (!ctx->storage.getFile(modFileName, jsonFileModules))
@@ -716,14 +713,19 @@ namespace LoopMax::Core {
 
                         for (JsonObject mod : modules) {
                             const char* name = mod["name"];
-                            if (!name || strcmp(name, moduleName.c_str()) != 0)
+                            if (!name || strcmp(name, moduleData.Name.c_str()) != 0)
                                 continue;
+
+                            const char* deviceName = mod["deviceName"];
+                            if (deviceName != nullptr && deviceName[0] != '\0') {
+                                moduleData.DeviceName = deviceName;
+                            } 
 
                             // payload
                             if (!mod["payload"].isNull()) {
-                                   serializeJson(mod["payload"], JsonConfig);
+                                   serializeJson(mod["payload"], moduleData.JsonConfig);
                             }
-                            
+                           
                             // pins
                             JsonArray pinsJson = mod["pins"].as<JsonArray>();
                             if (!pinsJson.isNull()) {
@@ -731,7 +733,7 @@ namespace LoopMax::Core {
                                     uint32_t pinNumber = pinJson["number"] | UINT32_MAX;
                                     if (pinNumber == UINT32_MAX) continue;
 
-                                    for (auto& pin : pins) {
+                                    for (auto& pin : moduleData.pins) {
                                         if (pin.number != pinNumber) continue;
 
                                         if (pinJson["level"].is<uint32_t>())
@@ -755,39 +757,42 @@ namespace LoopMax::Core {
 
 
 
-                bool ConfigManager::saveModuleConfig(const std::string& moduleName,const std::vector<modulePin>& pins,const std::string& JsonConfig) {
-                            if (moduleName.empty()) return false;
+                bool ConfigManager::saveModuleConfig(IModuleData& moduleData) {
+                            if(moduleData.Name.empty()||moduleData.DeviceName.empty()) return false;
+
                             std::string jsonFileModules;
                             JsonDocument doc;
                             if (!ctx->storage.getFile(modFileName, jsonFileModules) ||
                                 deserializeJson(doc, jsonFileModules)) {
-                                jsonFileModules = buildModuleFile(moduleName, pins, JsonConfig);
+                                jsonFileModules = buildModuleFile(moduleData);
                                 return ctx->storage.saveFile(modFileName, jsonFileModules);
                             }
                             JsonArray modules = doc["modules"].to<JsonArray>();
                             // 🔍 trova o crea il modulo
                             JsonObject mod;
                             for (JsonObject m : modules) {
-                                if (strcmp(m["name"] | "", moduleName.c_str()) == 0) {
+                                if (strcmp(m["name"] | "", moduleData.Name.c_str()) == 0) {
                                     mod = m;
                                     break;
                                 }
                             }
                             if (mod.isNull()) {
                                 mod = modules.add<JsonObject>();
-                                mod["name"] = moduleName;
+                                mod["name"] = moduleData.Name;
                             }
-                            
 
+                            mod["deviceName"] = moduleData.DeviceName;
+                            
                             // 📦 payload
                             JsonDocument payloadDoc;
-                            if (!deserializeJson(payloadDoc, JsonConfig)) {
+                            if (!deserializeJson(payloadDoc, moduleData.JsonConfig)) {
                                 mod["payload"] = payloadDoc.as<JsonObject>();
                             }
+
                             // 🔌 pins (riscritti sempre)
                             JsonArray pinsJson = mod["pins"].to<JsonArray>();
                             pinsJson.clear();
-                            for (const auto& p : pins) {
+                            for (const auto& p : moduleData.pins) {
                                 JsonObject pin = pinsJson.add<JsonObject>();
                                 pin["number"] = p.number;
                                 pin["name"]   = p.name;
@@ -809,19 +814,18 @@ namespace LoopMax::Core {
 
 
             
-           std::string ConfigManager::buildModuleFile(std::string moduleName,
-                                           std::vector<modulePin> pins,
-                                           std::string JsonConfig) {
+           std::string ConfigManager::buildModuleFile(IModuleData& moduleData) {
                     JsonDocument doc;
 
                     JsonArray modules = doc["modules"].to<JsonArray>();
                     JsonObject mod = modules.add<JsonObject>();
 
-                    mod["name"]    = moduleName;
-                    mod["payload"] = JsonConfig;
+                    mod["name"]    = moduleData.Name;
+                    mod["deviceName"]    = moduleData.DeviceName;
+                    mod["payload"] = moduleData.JsonConfig;
 
                     JsonArray jsonPins = mod["pins"].to<JsonArray>();
-                    for (const auto& pinData : pins) {
+                    for (const auto& pinData : moduleData.pins) {
                         JsonObject pin = jsonPins.add<JsonObject>();
                         pin["number"] = pinData.number;
                         pin["name"]   = pinData.name;

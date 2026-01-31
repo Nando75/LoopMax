@@ -58,9 +58,9 @@ namespace LoopMax {
 
                     //IConfig
                     bool isReady() const override;
-                    bool ExistSavedConfig(const std::string& moduleName) override;
-                    void loadConfig(const std::string& moduleName,std::vector<modulePin>& pins,std::string& JsonConfig) override;
-                    bool saveModuleConfig(const std::string& moduleName,const std::vector<modulePin>& pins,const std::string& JsonConfig) override;
+                    bool ExistSavedConfig(IModuleData& moduleData) override;
+                    void loadConfig(IModuleData& moduleData) override;
+                    bool saveModuleConfig(IModuleData& moduleData) override;
                     bool removeConfig(const std::string& moduleName) override;
 
                     bool resetSystem();
@@ -90,7 +90,7 @@ namespace LoopMax {
                     const std::vector<Types::SystemMode> _modes = { Types::SystemMode::AP, Types::SystemMode::LAN };
                     
                     std::vector<const char*> _deps;
-                    std::string buildModuleFile(std::string moduleName, std::vector<modulePin> pins, std::string JsonConfig);
+                    std::string buildModuleFile(IModuleData& moduleData);
                     
                     std::vector<Services::IResetSink*> sinks;
 

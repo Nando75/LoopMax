@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
 #include "common/types.h"
-#include "common/types_web.h"
-
 
 namespace LoopMax {
     namespace Core {
