@@ -398,6 +398,8 @@ namespace LoopMax::Types {
 
              struct IModuleData {
                 std::string FwVersion = "";
+                bool UpdateAvalaible = false;
+                std::string newFwVersion = "";
                 std::string Name = "";
                 std::string DeviceName = "";
                 

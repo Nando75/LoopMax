@@ -445,6 +445,8 @@ namespace LoopMax::Core {
                                 auto& data = mod->Data();
 
                                 modObj["FwVersion"]   = data.FwVersion;
+                                modObj["UpdateAvalaible"] = data.UpdateAvalaible;
+                                modObj["newFwVersion"] = data.newFwVersion;
                                 modObj["Name"]        = data.Name;
                                 modObj["DeviceName"]  = data.DeviceName;
                                 modObj["Icon"]        = data.Icon;

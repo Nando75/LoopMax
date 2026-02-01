@@ -25,7 +25,6 @@ void Zappy2::init(Services::ModuleContext* context)
     if(ctx->config.ExistSavedConfig(moduleData))
     {
       //ctx->serial.printLn("DATA EXIST");
-      //ctx->serial.printLn("PRIMA");
       //printPins();
       ctx->config.loadConfig(moduleData);
       this->loadJsonPayload();
@@ -35,7 +34,7 @@ void Zappy2::init(Services::ModuleContext* context)
     else
     {
         //ctx->serial.print("DATA NOT EXIST -- SAVE:");
-        ctx->serial.printLn(ctx->config.saveModuleConfig(moduleData));
+        ctx->config.saveModuleConfig(moduleData);
         //printPins();
     }
 
