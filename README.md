@@ -111,10 +111,25 @@ Thanks to the new **Scheduler** class, **Zappy 2ch** can now manage two types of
 ### ✔️ Weekly Schedule  
 Repeats automatically on selected days of the week.
 
+<p align="center">
+  <img src="docs/img/weeklyScheduler.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
 ### ✔️ One‑Time Schedule  
 Executes once at the specified date and time, then automatically expires.
 
-Below are three screenshots showcasing the updated user interface.
+<p align="center">
+  <img src="docs/img/onetimeScheduler.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+### ✔️ Active programs
+  
+<p align="center">
+  <img src="docs/img/onetimeScheduler.webp" alt="LoopMax Embedded OS" width="600">
+</p>
+
+
+
 
 
 
