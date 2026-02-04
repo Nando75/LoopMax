@@ -125,7 +125,7 @@ Executes once at the specified date and time, then automatically expires.
 ### ✔️ Active programs
   
 <p align="center">
-  <img src="docs/img/onetimeScheduler.webp" alt="LoopMax Embedded OS" width="600">
+  <img src="docs/img/activeSchedules.webp" alt="LoopMax Embedded OS" width="600">
 </p>
 
 
