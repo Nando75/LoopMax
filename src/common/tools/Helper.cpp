@@ -5,6 +5,7 @@
 #if defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_ESP32)
     #include <esp_random.h>                    
 #endif
+#include <algorithm>
 
 namespace LoopMax::Utils {
    
@@ -72,6 +73,72 @@ namespace LoopMax::Utils {
                         return seed;
                     #endif
                 }
+
+
+                bool Helper::isNumeric(const std::string& s) {
+                    if (s.empty()) return false;
+                    return std::all_of(s.begin(), s.end(),
+                                    [](unsigned char c){ return std::isdigit(c); });
+                }
+
+                bool Helper::toInt(const std::string& s, int& out) {
+                    if (!isNumeric(s)) return false;
+
+                    char* end;
+                    long v = strtol(s.c_str(), &end, 10);
+
+                    if (*end != '\0') return false;
+
+                    out = static_cast<int>(v);
+                    return true;
+                }
+
+                bool Helper::toInt64(const std::string& s, int64_t& out) {
+                    if (!isNumeric(s)) return false;
+
+                    char* end;
+                    long long v = strtoll(s.c_str(), &end, 10);
+
+                    if (*end != '\0') return false;
+
+                    out = static_cast<int64_t>(v);
+                    return true;
+                }
+                
+
+                bool Helper::toInt(const std::string& s, int& out, int min, int max)
+                    {
+                        if (s.empty()) return false;
+
+                        char* end;
+                        long v = strtol(s.c_str(), &end, 10);
+
+                        // parsing fallito o caratteri extra
+                        if (*end != '\0') return false;
+
+                        // overflow o fuori range
+                        if (v < min || v > max) return false;
+
+                        out = static_cast<int>(v);
+                        return true;
+                    }
+
+
+                    bool Helper::toInt64(const std::string& s, int64_t& out, int64_t min, int64_t max)
+                    {
+                        if (s.empty()) return false;
+
+                        char* end;
+                        long long v = strtoll(s.c_str(), &end, 10);
+
+                        if (*end != '\0') return false;
+
+                        if (v < min || v > max) return false;
+
+                        out = static_cast<int64_t>(v);
+                        return true;
+                    }
+
 
 
 

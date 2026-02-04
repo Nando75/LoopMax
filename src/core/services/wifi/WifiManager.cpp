@@ -242,6 +242,7 @@ namespace LoopMax::Core {
                             ctx->logs.write("PublicIP: HTTP request failed", LogType::WARNING, name(), icon());
                             return;
                         }
+                        //Serial.println(res.body.c_str());
 
                         // Controllo body
                         if (res.body.empty()) {
@@ -267,10 +268,21 @@ namespace LoopMax::Core {
                             return;
                         }
 
+                        ctx->time.setUnix(doc["data"]["api"]["time"] | 0);
+                        
+                        ctx->time.applyTimezone(doc["data"]["timezone"]["name"] | "",
+                                                doc["data"]["timezone"]["gmtOffset"] | 0,
+                                                doc["data"]["timezone"]["dstOffset"] | 0);
+
+                        
+
+
                         //Set Time
+                        /*
                         ctx->time.setUnix(doc["data"]["api"]["time"]|0);
                         ctx->time.setTimezone(doc["data"]["timezone"]["name"] | "");
                         ctx->time.setTzOffset(doc["data"]["timezone"]["gmtOffset"] | 0);
+                        */
                         //Api info
                         ctx->system.setApi(doc["data"]["api"]["name"] | "");
                         ctx->system.setApiVersion(doc["data"]["api"]["version"] | "");

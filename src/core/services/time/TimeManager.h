@@ -43,8 +43,8 @@ namespace LoopMax {
                     const std::string ntpServer() const override { return _timer.ntpServer(); }
                     const bool isSyncronized() const override { return _timer.isSyncronized(); };
                     void checkInternetTime() override { _timer.checkInternetTime(); };
-                    
-                    
+                    void applyTimezone(const std::string& tzName, int gmtOffset, int dstOffset);
+                    void applyTimezoneFromClient(const std::string& tzName, int offsetSeconds);
 
                 private:
                     bool setTimeFromClient(std::string unix, std::string timezone, std::string offset);
@@ -54,7 +54,7 @@ namespace LoopMax {
                     std::vector<const char*> _deps;
                     std::vector<WebCommand> _webCommands;
                     Core::SystemContext* ctx = nullptr;
-                    
+                    const char* getLocalDateTime();
 
                 };
 

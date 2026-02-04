@@ -1,0 +1,9 @@
+ESP32 WROOM 32 --> 5,53
+Modulo rele 4ch --> 3,20
+Alimentatore 5v --> 3,00
+Shuko x 2 --> 6,60
+Cavi, Viti, 4 Led, 
+1 condensatore, 4 resistenze --> 2,00
+Stampa 3D --> 10,00
+
+Totale Costi a me --> 30,33 € (Programmazione esclusa 4gg).

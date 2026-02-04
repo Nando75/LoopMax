@@ -408,7 +408,8 @@ namespace LoopMax::Types {
                 std::string Label = "";
                 std::string Company = "";
                 std::string Url = "";
-                
+                bool isRegistered = false;
+
                 HttpsData httpsData;
                 MqttsData mqttsData;
 
@@ -417,6 +418,8 @@ namespace LoopMax::Types {
                 std::string JsonConfig = "";
 
                 std::string JsUIClass = "";
+                std::vector<std::string> JsFiles;
+
 
                 std::vector<WebCommand> webCommands;
 

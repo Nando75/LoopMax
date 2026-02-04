@@ -13,6 +13,7 @@ src/modules/security
 src/modules/SmartiLabApi
 
 # PRIVATE MODULES
+src/modules/Zappy_2ch
 src/modules/Zappy_4ch
 
 # PRIVATE CONFIGS

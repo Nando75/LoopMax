@@ -31,9 +31,10 @@ namespace LoopMax::Core {
 
                     //ILogs
                     void write(const char* msg, Types::LogType type = Types::LogType::INFO,
-                                const char* source = "logs", const char* sourceIcon = "✏️", const char* payload = nullptr) override;
+                                const char* source = "logs", const char* sourceIcon = "✏️", const char* payload = "{}") override;
+
                     void write(std::string msg, Types::LogType type = Types::LogType::INFO,
-                                std::string source = "logs", std::string sourceIcon = "✏️", std::string payload = "") override 
+                                std::string source = "logs", std::string sourceIcon = "✏️", std::string payload = "{}") override 
                                             { this->write(msg.c_str(),type,source.c_str(),sourceIcon.c_str(),payload.c_str()); }
 
                     std::vector<Types::LogTypeInfo> logTypes() override;

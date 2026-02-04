@@ -43,6 +43,7 @@ namespace LoopMax {
                     //IHal_Config
                     Settings& settings() override { return _settings; }
                     const Settings& settings() const override { return _settings; }
+                    std::string&  getLanguage() override { return _settings.lng; }
                     
                     
                     

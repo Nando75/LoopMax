@@ -48,15 +48,17 @@ namespace LoopMax::Core {
                 }
                 */
 
-                void TimeManager::setUnix(int64_t unix) {
-                    struct timeval tv;
-                    tv.tv_sec = unix;
-                    tv.tv_usec = 0;
-                    settimeofday(&tv, nullptr);   // <--- QUESTA È LA CHIAVE
+            void TimeManager::setUnix(int64_t unix) {
+                        struct timeval tv;
+                        tv.tv_sec  = unix;
+                        tv.tv_usec = 0;
+                        settimeofday(&tv, nullptr);
+                        time_t now = time(nullptr);
+                        struct tm* lt = localtime(&now);
 
-                    _timer.setUnix(unix);
-                    ctx->logs.write("Internet Time syncronized.", LogType::INFO, name(), icon());
-                }
+                        _timer.setUnix(unix);
+                    }
+
 
 
                 void TimeManager::setTimezone(const std::string& tz)  { _timer.setTimezone(tz); }
@@ -72,14 +74,15 @@ namespace LoopMax::Core {
                                         "time/set",
                                         0x02,
                                         [this](IHttpContext& httpCtx){
-                                           
+
+                                            
+                                            
                                             if(this->setTimeFromClient(httpCtx.getParam("unix"),
                                                                        httpCtx.getParam("timezone"),
                                                                        httpCtx.getParam("offset")))
                                             {
 
                                                 httpCtx.send(200, "text/plain", std::to_string(this->Unix()));
-
                                             }
                                             else
                                             {
@@ -130,8 +133,67 @@ namespace LoopMax::Core {
                         this->setUnix(unix);
                         this->setTimezone(timezoneStr);
                         this->setTzOffset(offset);
+                        this->applyTimezoneFromClient(timezoneStr,offset);
                         return true;
                 }
+
+                void TimeManager::applyTimezone(const std::string& tzName, int gmtOffset, int dstOffset) {
+                    // gmtOffset è in secondi → converti in ore
+                    int hours = gmtOffset / 3600;
+
+                    // Nome standard e nome DST
+                    // Se vuoi puoi mappare i nomi reali, ma per ora usiamo CET/CEST
+                    const char* stdName = "CET";
+                    const char* dstName = "CEST";
+
+                    // ESP32 vuole il segno invertito (CET-1 = UTC+1)
+                    char tz[64];
+                    snprintf(tz, sizeof(tz),
+                            "%s%s%d%s,M3.5.0/2,M10.5.0/3",
+                            stdName,
+                            (hours >= 0 ? "-" : "+"),
+                            abs(hours),
+                            dstName);
+
+                    setenv("TZ", tz, 1);
+                    tzset();
+
+                    _timer.setTimezone(tz);
+                    _timer.setTzOffset(gmtOffset);
+
+                    ctx->logs.write(std::string("Timezone applied: ") + tz,LogType::INFO, name(), icon());
+                    ctx->logs.write(std::string("Time synchronized from Internet, at ") + this->getLocalDateTime(),LogType::INFO, name(), icon());
+                }
+
+                void TimeManager::applyTimezoneFromClient(const std::string& tzName, int offsetSeconds)
+                    {
+                        int hours = offsetSeconds / 3600;
+                        char tz[64];
+                        snprintf(tz, sizeof(tz),
+                                "GMT%s%d",
+                                (hours >= 0 ? "-" : "+"),
+                                abs(hours));
+
+                        setenv("TZ", tz, 1);
+                        tzset();
+                        _timer.setTimezone(tz);
+                        _timer.setTzOffset(offsetSeconds);
+
+                        ctx->logs.write(std::string("Timezone applied: ") + tz,LogType::INFO, name(), icon());
+                        ctx->logs.write(std::string("Time synchronized from local Client, at ") + this->getLocalDateTime(),LogType::INFO, name(), icon());
+                    }
+
+
+                    const char* TimeManager::getLocalDateTime()
+                    {
+                        static char buf[32];
+                        time_t now = time(nullptr);
+                        struct tm* lt = localtime(&now);
+                        strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", lt);
+                        return buf;
+                    }
+
+
                 
                 
 

@@ -13,6 +13,12 @@ namespace LoopMax::Core::Hal {
                     _client.setInsecure();    
                 }
                 */
+
+               
+                if (_mqtt != nullptr) { delete _mqtt; _mqtt = nullptr; }
+               _client = WiFiClientSecure();
+
+
                 _client.setInsecure();
 
                 _client.setTimeout(_config->Mqtts_TimeOut);
@@ -46,6 +52,7 @@ namespace LoopMax::Core::Hal {
             void ard_mqtts::disconnect() {
                 if (_mqtt->connected()) {
                     _mqtt->disconnect();
+                    
                 }
             }
 

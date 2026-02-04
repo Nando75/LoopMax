@@ -11,7 +11,7 @@ namespace LoopMax::Core::Hal {
     class IHal_Logs {
     public:
         virtual void write(const char* msg, Types::LogType type = Types::LogType::INFO, const char* source = "logs", 
-                                            const char* sourceIcon = "✏️" , const char* payload = nullptr) = 0;
+                                            const char* sourceIcon = "✏️" , const char* payload = "{}") = 0;
                                             
         virtual  void registerSink(Services::ILogSink* sink) = 0;
         virtual std::vector<Types::LogTypeInfo> logTypes() = 0;

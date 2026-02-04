@@ -135,7 +135,6 @@ void WebManager::initModulesRoutes() {
 
     for (auto& module : ctx->Modules()) {
         auto& modData = module->Data();
-
         // --- SERVE IL FILE JS DEL MODULO COME ES6 MODULE ---
         if (!modData.JsUIClass.empty()) {
             //std::string modName = modData.Name;
@@ -144,12 +143,20 @@ void WebManager::initModulesRoutes() {
             std::transform(jsFile.begin(), jsFile.end(), jsFile.begin(), ::tolower);
             std::string urlPath = "/modules/" + jsFile;
             std::string fsPath  = "/web/modules/" + jsFile;
-
             _web.on(urlPath, (int)WMethod::GET, [fsPath](IHttpContext& ctx) {
                 ctx.sendFile(fsPath, getMime(fsPath));
             });
-
             ctx->logs.write("Module JS route: " + urlPath, LogType::DEBUG, name(), icon());
+            urlPath.clear();
+            fsPath.clear();
+            for (auto& jsFile : modData.JsFiles) {
+                urlPath = "/modules/" + jsFile;
+                fsPath  = "/web/modules/" + jsFile;
+                _web.on(urlPath, (int)WMethod::GET, [fsPath](IHttpContext& ctx) {
+                    ctx.sendFile(fsPath, getMime(fsPath));
+                });
+                ctx->logs.write("Module js: " + urlPath , LogType::DEBUG, name(), icon());
+            }
         }
 
         // --- API DEL MODULO ---
@@ -173,7 +180,8 @@ WebManager::HandlerType WebManager::checkLogin(HandlerType handler) {
         }
         //LOGIN/LOGOUT SEMPRE ACCESSIBILE
         if (httpCtx.url() == "/api/web/login" || httpCtx.url() == "/api/web/logout" || 
-            httpCtx.url() == "/api/json/system" || httpCtx.url() == "/api/json/wifi" || httpCtx.url() == "/api/json/modules") {
+            httpCtx.url() == "/api/json/system" || httpCtx.url() == "/api/json/wifi" ||
+            httpCtx.url() == "/api/json/modules"|| httpCtx.url() == "/api/conf/set/language") {
             handler(httpCtx);
             return;
         }

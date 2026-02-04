@@ -18,6 +18,7 @@ namespace LoopMax::Core::Hal {
                         std::string apSsid     = "LoopMaxAP";
                         std::string apPsw      = "loopmaxap";
                         std::string FwVersion  = "1.0.0";
+                        std::string lng  = "EN";
                         std::string Company    = "SmartiLab";
                         std::string CompanyUrl = "https://SmartiLab.it";
                         std::string ApiUrl     = "https://smartilab.it/api/devices.php";
@@ -40,6 +41,8 @@ namespace LoopMax::Core::Hal {
             // Settings
             virtual Settings& settings() = 0;
             virtual const Settings& settings() const = 0;
+            virtual std::string&  getLanguage() = 0;
+
             virtual std::string  buildTimeJson() = 0;
             virtual std::string  buildSystemJson(bool isLogged=true) = 0;
             virtual std::string buildLogsJson() = 0;

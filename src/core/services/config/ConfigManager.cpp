@@ -97,6 +97,7 @@ namespace LoopMax::Core {
                         device["key"]     = _settings.key;
                         device["wfSsid"]  = _settings.wfSsid;
                         device["wfPsw"]   = _settings.wfPsw;
+                        device["lng"]   = _settings.lng;
                         outJson.reserve(256);
                         serializeJson(doc, outJson);
                     }
@@ -130,7 +131,16 @@ namespace LoopMax::Core {
                                     LogType::WARNING, this->name(), this->icon());
                                 return false; 
                             }
-                           // --- STRINGHE ---
+
+                            if (device["lng"].is<const char*>()) {
+                                _settings.lng = device["lng"].as<const char*>();
+                            } else { 
+                                ctx->logs.write("lng not found default: 'EN'",
+                                    LogType::WARNING, this->name(), this->icon());
+                                _settings.lng = "EN";
+                            }
+
+                           
                             if (device["mode"].is<const char*>())
                                 { _settings.mode = SystemModeFromStr(device["mode"].as<const char*>()); }
                               else { 
@@ -202,6 +212,7 @@ namespace LoopMax::Core {
             JsonObject sys = doc["system"].to<JsonObject>();
 
             sys["debug"]        = IS_DEBUG;
+            sys["lng"]        = _settings.lng;
             sys["name"]         = _settings.name;
             sys["key"]          = _settings.key;
             sys["FwVersion"]    = _settings.FwVersion;
@@ -266,7 +277,6 @@ namespace LoopMax::Core {
                     e["pld"]    = l.payload;
                 }
             }
-
             std::string out;
             out.reserve(2048);
             serializeJson(doc, out);
@@ -452,11 +462,16 @@ namespace LoopMax::Core {
                                 modObj["Icon"]        = data.Icon;
                                 modObj["Code"]        = data.Code;
                                 modObj["Company"]     = data.Company;
+                                modObj["isRegistered"]= data.isRegistered;
                                 modObj["Url"]         = data.Url;
                                 modObj["SaveConfig"]  = data.SaveConfig;
                                 modObj["JsonConfig"]  = data.JsonConfig;
                                 modObj["JsUIClass"]   = data.JsUIClass;
-
+                                JsonArray jsArr = modObj["JsFiles"].to<JsonArray>();
+                                for (const auto& jsUrl : data.JsFiles) {
+                                    JsonObject jsObj = jsArr.add<JsonObject>();
+                                    jsObj["uri"] = jsUrl;
+                                }
                                 modObj["Https_ShowData"]   = data.httpsData.Https_ShowData;
                                 if(data.httpsData.Https_ShowData)
                                 {
@@ -524,6 +539,27 @@ namespace LoopMax::Core {
 
 
                 void ConfigManager::registerEndpoints() { 
+                
+                _webCommands.push_back({
+                        "conf/set/language",
+                        0x02,
+                        [this](IHttpContext& httpCtx){
+                            std::string lng = httpCtx.getParam("lng");
+                            if(lng.empty() || lng.length()!=2)
+                            {
+                                httpCtx.send(400, "text/plain", "Language code not valid!");
+                                return;
+                            }
+                            _settings.lng = httpCtx.getParam("lng");
+                            bool res = this->saveConfig();
+                            if(res) 
+                            {
+                                ctx->logs.write("Language changed to " + lng,LogType::INFO,this->name(), this->icon());
+                                httpCtx.send(200, "text/plain", "ok");
+                            }
+                            if(!res) httpCtx.send(400, "text/plain", "ko");
+                        }
+                    });
 
                 _webCommands.push_back({
                         "conf/reset",
@@ -571,11 +607,13 @@ namespace LoopMax::Core {
                             _settings.wfSsid = httpCtx.getParam("ssid");
                             _settings.wfPsw = httpCtx.getParam("psw");
                             bool res = this->saveConfig();
+                            //bool res = true;
                             if(res) 
                             {
                                 ctx->logs.write("Wifi login saved, reboot to LAN mode",LogType::INFO,this->name(), this->icon());
                                 httpCtx.send(200, "text/plain", "ok");
                                 ctx->system.restart();
+
                             }
                             if(!res) httpCtx.send(400, "text/plain", "ko");
                         }
@@ -789,6 +827,8 @@ namespace LoopMax::Core {
                             JsonDocument payloadDoc;
                             if (!deserializeJson(payloadDoc, moduleData.JsonConfig)) {
                                 mod["payload"] = payloadDoc.as<JsonObject>();
+                                ctx->serial.printLn("PAYLOAD !!");
+                                ctx->serial.printLn(moduleData.JsonConfig);
                             }
 
                             // 🔌 pins (riscritti sempre)
@@ -803,13 +843,11 @@ namespace LoopMax::Core {
                             // 💾 salva
                             jsonFileModules.clear();
                             serializeJson(doc, jsonFileModules);
-                            ctx->logs.write(
-                                "Saving Modules",
-                                LogType::INFO,
-                                this->name(),
-                                this->icon(),
-                                jsonFileModules
-                            );
+                            
+                            
+                            ctx->serial.printLn("SALVATAGGIO !!");
+                            ctx->serial.printLn(jsonFileModules);
+
                            return ctx->storage.saveFile(modFileName, jsonFileModules);
                         }
 

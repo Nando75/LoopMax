@@ -16,6 +16,7 @@ namespace LoopMax::Services {
         virtual bool saveModuleConfig(IModuleData& moduleData) = 0;
         virtual bool removeConfig(const std::string& moduleName) = 0;
         virtual std::string getKey() = 0;
+        virtual std::string&  getLanguage() = 0;
 
         virtual  void registerSink(Services::IResetSink* sink) = 0;
         

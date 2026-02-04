@@ -33,7 +33,7 @@ namespace LoopMax::Core {
                 void LogsManager::loop() { }
                 void LogsManager::stop() { }
 
-
+/*
                 void LogsManager::write(const char* msg, Types::LogType type, const char* source, const char* sourceIcon, const char* payload) {
                     if (!IS_DEBUG && type == Types::LogType::DEBUG) return;
                     if (!msg) return; // Sicurezza extra
@@ -55,6 +55,87 @@ namespace LoopMax::Core {
                         if (sink) sink->publishLogs(_logBuffer);
                     }
                 }
+*/
+
+/*
+                void LogsManager::write(const char* msg,
+                                        Types::LogType type,
+                                        const char* source,
+                                        const char* sourceIcon,
+                                        const char* payload) 
+                {
+                    if (!IS_DEBUG && type == Types::LogType::DEBUG) return;
+                    if (!msg) return;
+
+                    std::lock_guard<std::mutex> lock(_logsMutex);
+
+                    // Normalizza payload
+                    const char* safePayload = (payload && payload[0] != '\0') ? payload : "";
+
+                    // 1. Salva nel vettore
+                    this->saveLog(msg,
+                                LogTypeToStr(type),
+                                LogTypeToIcon(type),
+                                source,
+                                sourceIcon,
+                                ctx->time.micros() / 1000ULL,
+                                safePayload);
+
+                    // 2. Genera JSON per i sink
+                    logToJson(_logBuffer, sizeof(_logBuffer),
+                            msg,
+                            LogTypeToStr(type),
+                            LogTypeToIcon(type),
+                            source,
+                            sourceIcon,
+                            ctx->time.micros() / 1000ULL,
+                            safePayload);
+
+                    for (auto* sink : sinks) {
+                        if (sink) sink->publishLogs(_logBuffer);
+                    }
+                }
+*/
+
+
+
+void LogsManager::write(const char* msg,
+                        Types::LogType type,
+                        const char* source,
+                        const char* sourceIcon,
+                        const char* payload) {
+    if (!IS_DEBUG && type == Types::LogType::DEBUG) return;
+    if (!msg) return;
+
+    std::lock_guard<std::mutex> lock(_logsMutex);
+
+    const char* safePayload = payload ? payload : "{}";
+
+    saveLog(msg,
+            LogTypeToStr(type),
+            LogTypeToIcon(type),
+            source,
+            sourceIcon,
+            ctx->time.micros() / 1000ULL,
+            safePayload);
+
+    logToJson(_logBuffer, sizeof(_logBuffer),
+              msg,
+              LogTypeToStr(type),
+              LogTypeToIcon(type),
+              source,
+              sourceIcon,
+              ctx->time.micros() / 1000ULL,
+              safePayload);
+
+    for (auto* sink : sinks) {
+        if (sink) sink->publishLogs(_logBuffer);
+    }
+}
+
+
+
+
 
 
                 
