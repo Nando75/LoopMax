@@ -102,6 +102,24 @@ The application module interfaces directly with the dual-relay hardware, allowin
 A **Bootstrap-based user interface** is included and **dynamically loaded by the LoopMax core**, providing a simple and responsive web interface for controlling the relays without requiring additional frontend configuration.
 
 
+## 📌 Pin Scheduler
+
+A new update introduces full scheduling capabilities.  
+When operating in **LAN Mode** with an active internet connection, the device automatically synchronizes its internal clock.  
+Thanks to the new **Scheduler** class, **Zappy 2ch** can now manage two types of On/Off programs:
+
+### ✔️ Weekly Schedule  
+Repeats automatically on selected days of the week.
+
+### ✔️ One‑Time Schedule  
+Executes once at the specified date and time, then automatically expires.
+
+Below are three screenshots showcasing the updated user interface.
+
+
+
+
+
 ### 🔌 GPIO Pin Assignment
 The Zappy 2ch module uses the following GPIO pins:
 | GPIO  | Function | Description |
