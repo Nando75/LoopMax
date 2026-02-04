@@ -417,27 +417,27 @@ renderSchedules() {
 
 
                 formatWeeklySchedule(s) {
+                    const lblNextDay = translator.tr("lblNextDay");
+
                     // minuti → HH:MM
                     const fmt = (min) => {
                         const h = Math.floor(min / 60).toString().padStart(2,'0');
                         const m = (min % 60).toString().padStart(2,'0');
                         return `${h}:${m}`;
                     };
-
                     const onStr  = fmt(s.on);
                     const offStr = fmt(s.off);
-
                     // overnight?
                     const overnight = s.on > s.off;
-
                     return overnight
-                        ? `${onStr} → ${offStr} (giorno dopo)`
+                        ? `${onStr} → ${offStr} (${lblNextDay})`
                         : `${onStr} → ${offStr}`;
                 }
 
 
             formatDaysMask(daysMask) {
-                const dayNames = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
+                const dayKeys = ["lblDaySun","lblDayMon","lblDayTue","lblDayWed","lblDayThu","lblDayFri","lblDaySat"];
+                const dayNames = dayKeys.map(k => translator.tr(k));
                 let result = [];
                 for (let i = 0; i < 7; i++) {
                     if (daysMask & (1 << i)) result.push(dayNames[i]);
