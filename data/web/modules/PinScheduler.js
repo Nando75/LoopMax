@@ -197,7 +197,7 @@ initObjects() {
 openScheduleModal(pin) {
     this.currentPin = pin;
     //const schedules = this.getSchedules();
-
+    //setTextContent("divDeviceDateTime", this.time.formatNow());
     const lblPin = document.getElementById("schPin");
     if(lblPin) lblPin.textContent = " (" + pin + ")";
     const lblLineName = document.getElementById("lblLineName");
@@ -556,7 +556,7 @@ renderSchedules() {
                 }
 
 
-
+/*
                 checkExpiredSchedules() {
                     const now = this.time.unix * 1000;
                     const schedules = this.getSchedules();
@@ -597,6 +597,56 @@ renderSchedules() {
                         }
                     });
                 }
+*/
+
+            checkExpiredSchedules() {
+                const now = this.time.unix * 1000;
+                const schedules = this.getSchedules();
+                for (const pin in schedules) {
+                    const pinSchedules = schedules[pin];
+                    if (!pinSchedules) continue;
+                    const remaining = [];
+                    let shouldRemoveAccordion = false;
+                    let active = false;
+                    for (const s of pinSchedules) {
+                        // Weekly → sempre rimanente
+                        if (s.type === "weekly") {
+                            remaining.push(s);
+                            continue;
+                        }
+                        const isActive = this.isScheduleActive(s, now);
+                        active = active || isActive;
+                        if (isActive) {
+                            this.updateToggle(pin, true, 1, "", "none");
+                            remaining.push(s);
+                            continue;
+                        }
+                        const endMs = s.end * 1000;
+                        if (endMs > now) {
+                            // Non attivo ma non scaduto → rimane
+                            this.updateToggle(pin, true, 0, "0.4", "none");
+                            remaining.push(s);
+                        } else {
+                            // Scaduto → rimuovere
+                            shouldRemoveAccordion = true;
+                        }
+                    }
+                    // Se qualche schedule è scaduto
+                    if (shouldRemoveAccordion) {
+                        this.updateToggle(pin, false, 0, "", "");
+                        const btn = document.querySelector(`.schedule-btn[data-pin-number="${pin}"]`);
+                        if (btn) btn.textContent = translator.tr("lblSchedule");
+                        this.removeSchAccordion(pin, 1500);
+                    }
+                    // Aggiorna struttura
+                    if (remaining.length > 0) {
+                        schedules[pin] = remaining;
+                    } else {
+                        delete schedules[pin];
+                    }
+                }
+            }
+
 
 
 
@@ -697,7 +747,9 @@ renderSchedules() {
                 //LoopMaxCore Global Timer (tick every second):
                 onTick(tick) {
                     // every 10 sec
-                    if (tick % 10 === 0) { this.checkExpiredSchedules(); }
+                    //if (tick % 10 === 0) { this.checkExpiredSchedules(); }
+                    this.checkExpiredSchedules();
+
                     setTextContent("divDeviceDateTime", this.time.formatNow());
 
                     //Refresh Eventually Dev Time into Scheduler accordions:

@@ -39,7 +39,7 @@ export default class Zappy2 {
     getHtml() {
         const deviceName = this.data.DeviceName || this.data.Name || "Zappy2";
         const update = this.data.UpdateAvalaible || false;
-        const isRegistered = this.data.isRegistered || false;
+        //const isRegistered = this.data.isRegistered || false;
 
         const internet = this.wifi.internet || false;
         const lblUpdate = translator.tr("lblUpdateFw")
@@ -103,7 +103,8 @@ export default class Zappy2 {
 
         ` : "";
         
-
+            const registerBoxHtml = ``;
+            /*
             const registerBoxHtml = !isRegistered ? `
                 <div class="mb-2 invert-box">
                     <div class="d-flex gap-2">
@@ -134,7 +135,7 @@ export default class Zappy2 {
 
                 </div>
             ` : "";
-
+            */
 
 
 
