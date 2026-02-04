@@ -5,15 +5,15 @@
 
 
 #define MODULE_VERSION "1.0.0"
-#define MODULE_CODE "pwc2_w32"
+#define MODULE_CODE "dev_code_here"
 #define MODULE_NAME "Zappy2"
-#define MODULE_DEVICE_NAME "Prese Ufficio"
+#define MODULE_DEVICE_NAME "Office Plugs"
 #define MODULE_UI_JS "zappy/zappy2.js"
 #define MODULE_COMPANY "SmartiLab"
 #define MODULE_COMPANY_URL "https://SmartiLab.it"
 
 #define MODULE_HTTPS_SHOW true
-#define MODULE_HTTPS_API_URL "https://smartilab.it/webapptelegram/serverScripts/deviceapi.php"
+#define MODULE_HTTPS_API_URL "https://your-api-here"
 #define MODULE_HTTPS_PORT 443
 #define MODULE_HTTPS_USR ""
 #define MODULE_HTTPS_PSW ""
