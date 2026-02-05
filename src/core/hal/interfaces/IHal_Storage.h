@@ -17,11 +17,10 @@ namespace LoopMax::Core::Hal {
         virtual void end() = 0;
         virtual bool getFile(const std::string &path, std::string &outData) = 0;
         virtual bool saveFile(const std::string &path, const std::string &data) = 0;
-
+        virtual uint32_t FS_OFFSET() = 0;
+        virtual uint32_t FS_SIZE() = 0;
         virtual bool getNVSConfig(const std::string &name, std::string &outData) = 0;
         virtual bool saveNVSConfig(const std::string &name, const std::string &data) = 0;
-
-
         //virtual void initContext(SystemContext* ctx) = 0;
     };
 

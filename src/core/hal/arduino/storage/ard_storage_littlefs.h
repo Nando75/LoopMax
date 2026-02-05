@@ -15,13 +15,16 @@ namespace LoopMax::Core::Hal {
         
         bool getFile(const std::string &path, std::string &outData);
         bool saveFile(const std::string &path, const std::string &data);
-
+        uint32_t FS_OFFSET()  override { return fsOffset; }
+        uint32_t FS_SIZE()  override { return fsSize; }
         bool getNVSConfig(const std::string &name, std::string &outData) override;
         bool saveNVSConfig(const std::string &name, const std::string &data) override;
 
     private:
         bool _ready = false;
         Preferences prefs;
+        uint32_t fsOffset=0;
+        uint32_t fsSize=0;
     };
 
 }

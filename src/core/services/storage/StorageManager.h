@@ -29,7 +29,7 @@ namespace LoopMax {
 
 
                     //IHalStorage
-                    void begin()  override {  _storage.begin(); }
+                    void begin()  override;
                     bool isReady() const override {  return _storage.isReady(); }
                     void end()  override {  _storage.end(); }
                     bool getFile(const std::string &path, std::string &outData) override {  return _storage.getFile(path, outData); }
@@ -37,6 +37,8 @@ namespace LoopMax {
 
                     bool getNVSConfig(const std::string &name, std::string &outData) override {  return _storage.getNVSConfig(name,outData); }
                     bool saveNVSConfig(const std::string &name, const std::string &data) override {  return _storage.saveNVSConfig(name,data); }
+                    uint32_t FS_OFFSET()  override { return _storage.FS_OFFSET(); }
+                    uint32_t FS_SIZE()  override { return _storage.FS_SIZE(); }
 
                 private:
                     Types::ServiceState currentState = Types::ServiceState::READY;

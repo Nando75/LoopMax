@@ -9,6 +9,11 @@ namespace LoopMax::Core {
                     : _storage(Hal::storage()),  _deps{"logs"}
                 {}
 
+                void StorageManager::begin() {
+                      _storage.begin(); 
+                }
+
+
                 //IService
                 void StorageManager::start() {
                         _storage.begin();
@@ -21,6 +26,12 @@ namespace LoopMax::Core {
                             currentState = Types::ServiceState::ERROR;
                             return;
                         }
+
+                        ctx->logs.write("FsOffset: " + std::to_string(_storage.FS_OFFSET()) + 
+                                        " FsSize: " + std::to_string(_storage.FS_SIZE()),
+                                    LoopMax::Types::LogType::DEBUG,
+                                    this->name(),
+                                    this->icon());
 
                         ctx->logs.write("Storage Ready",
                                     LoopMax::Types::LogType::INFO,

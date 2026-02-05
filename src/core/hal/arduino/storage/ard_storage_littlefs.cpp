@@ -4,7 +4,11 @@ namespace LoopMax::Core::Hal {
 
     void ard_storage_littlefs::begin() {
         _ready = LittleFS.begin(true);
-    }
+         const esp_partition_t* fs = esp_partition_find_first(ESP_PARTITION_TYPE_DATA,
+                                                                ESP_PARTITION_SUBTYPE_DATA_SPIFFS,NULL);
+            fsOffset = fs->address;
+            fsSize = fs->size;
+        }
 
     bool ard_storage_littlefs::isReady() const {
         return _ready;

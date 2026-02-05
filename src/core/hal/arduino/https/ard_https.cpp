@@ -1,5 +1,6 @@
 #include "ard_https.h"
 #include <HTTPClient.h>
+#include <esp_task_wdt.h>
 
 
 namespace LoopMax::Core::Hal {
@@ -85,6 +86,7 @@ namespace LoopMax::Core::Hal {
                     WiFiClient* stream = https.getStreamPtr();
                     uint8_t buff[512];
 
+                    /*
                     while (https.connected()) {
                         size_t available = stream->available();
                         if (!available) {
@@ -100,6 +102,28 @@ namespace LoopMax::Core::Hal {
                             return false; // il chiamante ha deciso di interrompere
                         }
                     }
+                    */
+                   while (https.connected()) {
+                            esp_task_wdt_reset();
+                            yield();
+                            delay(1);
+
+                            size_t available = stream->available();
+                            if (!available) {
+                                delay(1);
+                                continue;
+                            }
+
+                            size_t read = stream->readBytes(buff, std::min(available, sizeof(buff)));
+                            if (read == 0) break;
+
+                            if (!onChunk(buff, read)) {
+                                https.end();
+                                return false;
+                            }
+                        }
+
+
 
                     https.end();
                     return true;
