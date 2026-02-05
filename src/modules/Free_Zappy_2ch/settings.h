@@ -9,8 +9,8 @@
 #define MODULE_NAME "Zappy2"
 #define MODULE_DEVICE_NAME "Office Plugs"
 #define MODULE_UI_JS "zappy/zappy2.js"
-#define MODULE_COMPANY "SmartiLab"
-#define MODULE_COMPANY_URL "https://SmartiLab.it"
+#define MODULE_COMPANY "YourNameHere"
+#define MODULE_COMPANY_URL "https://google.it"
 
 #define MODULE_HTTPS_SHOW true
 #define MODULE_HTTPS_API_URL "https://your-api-here"

@@ -277,10 +277,12 @@ bool PinScheduleManager::clearSchedules(int pinNumber, bool saveConf) {
 
                         if (lastState[pinNumber] != desiredState) {
                             lastState[pinNumber] = desiredState;
+                                /*
                                 ctx->serial.printLn(
                                     "SCHEDULE TRIGGER → pin " + std::to_string(pinNumber) +
                                     " = " + (desiredState == PinLevel::High ? "HIGH" : "LOW")
                                 );
+                                */
                                 applyStateIfChanged(pinNumber, desiredState, false);
                         }
                     }
