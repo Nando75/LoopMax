@@ -54,25 +54,27 @@ export default class Zappy2 {
                 const btSchedule = internet ?  this.PinScheduler.getScheduleButton(ch) : ``;
 
                 return `
-                    <div class="relay-switch" data-pin-number="${ch}">
-                        <div class="flex-grow-1 me-3">
+                    <div class="relay-switch row align-items-center g-2 gx-0 w-100 mx-0" data-pin-number="${ch}">
+                        <div class="col-12 col-md-3 d-flex justify-content-center">
+                            <div class="big-switch relay-toggle ${isOn}"
+                                data-channel="${ch}"
+                                data-pin-number="${ch}"
+                                id="relay-${ch}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
                             <input type="text"
                                 class="form-control form-control-sm pin-name-input"
                                 value="${label}"
                                 data-pin-number="${ch}">
                         </div>
-
-                        <div class="big-switch relay-toggle ${isOn}"
-                            data-channel="${ch}"
-                            data-pin-number="${ch}"
-                            id="relay-${ch}">
+                        <div class="col-12 col-md-5 d-flex flex-column flex-sm-row justify-content-end gap-2">
+                            <button class="btn btn-sm btn-outline-primary pin-save-btn secondFont flex-fill"
+                                    data-pin-number="${ch}" disabled data-tr="lblSave">
+                                ${translator.tr("lblSave")}
+                            </button>
+                            ${btSchedule}
                         </div>
-
-                        <button class="btn btn-sm btn-outline-primary ms-2 pin-save-btn secondFont"
-                                data-pin-number="${ch}" disabled data-tr="lblSave">
-                            ${translator.tr("lblSave")}
-                        </button>
-                        ${btSchedule}
                     </div>
                 `;
             }).join("");
@@ -121,17 +123,17 @@ export default class Zappy2 {
                     <div class="mt-3 small text-muted">
                         <div class="mb-1" data-tr="lblKey"></div>
 
-                        <div class="input-group input-group-sm">
-                            <span id="deviceKeyInput"
-                                class="KeyText textGlowOrange">
+                         <div class="d-flex gap-2">
+                            <label id="deviceKeyInput" class="form-label fw-bold textGlowOrange KeyText" style="">
                                 ${this.system.key}
-                            </span>&nbsp;
+                            </label>
                             <button class="btn btn-outline-secondary"
                                     type="button"
                                     id="btCopyDeviceKey"
                                     title="Copy">🖋</button>
                         </div>
                     </div>
+
 
                 </div>
             ` : "";

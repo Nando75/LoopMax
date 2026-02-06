@@ -51,11 +51,8 @@ export default class PinScheduler {
         {
             lblName = 'lblEdit';
         }
-        return  `<button class="btn btn-sm btn-outline-secondary ms-2 schedule-btn secondFont"
-                        data-pin-number="${pinNumber}" data-tr="${lblName}">
-                      Programma
-                  </button>
-                `;
+        return  `<button class="btn btn-sm btn-outline-success pin-save-btn secondFont flex-fill" 
+                        data-pin-number="${pinNumber}" data-tr="${lblName}"></button>`;
     }
     
     getHtml() {
