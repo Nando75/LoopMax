@@ -129,12 +129,6 @@ Executes once at the specified date and time, then automatically expires.
 </p>
 
 
-
-
-
-
-
-
 ### 🔌 GPIO Pin Assignment
 The Zappy 2ch module uses the following GPIO pins:
 | GPIO  | Function | Description |
@@ -177,6 +171,16 @@ https://makerworld.com/en/models/2308490-zappy-2-lines
 ### 🖨️ Printing Notes
 - Optimized for FDM printing
 - Recommended material: PLA or PETG
+
+
+<p align="center">
+  <img src="docs/img/Zappy2Test1.gif" alt="LoopMax Embedded OS with Zappy 2" width="600">
+</p>
+
+<p align="center">
+  <img src="docs/img/Zappy2Test2.gif" alt="LoopMax Embedded OS with Zappy 2" width="600">
+</p>
+
 
 ---
 
