@@ -90,6 +90,7 @@
             // API di gestione
             ScheduleError addSchedule(const LoopMax::Types::ScheduleParams& p, int* outId = nullptr);
             bool clearSchedules(int pinNumber, bool saveConf=false);
+            bool hasSchedules(int pinNumber) const;
             //const std::vector<Schedule>* getSchedules(int pinNumber) const;
             bool IsTriggered = false;
 

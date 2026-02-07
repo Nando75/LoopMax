@@ -216,6 +216,14 @@ bool PinScheduleManager::clearSchedules(int pinNumber, bool saveConf) {
     return true;
 }
 
+bool PinScheduleManager::hasSchedules(int pinNumber) const {
+    auto it = schedules.find(pinNumber);
+    return it != schedules.end() && !it->second.empty();
+}
+
+
+
+
                 void PinScheduleManager::loop() {
                     if (!ctx) return;
                     time_t now = time(nullptr);

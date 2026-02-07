@@ -441,6 +441,7 @@ async invert() {
 
         // 2️⃣ aggiorna UI in base allo stato REALE
         json.pins.forEach(pin => {
+            if (this.isPinLocked(pin.number)) return;
             const toggle = document.getElementById(`relay-${pin.number}`);
             if (!toggle) return;
 

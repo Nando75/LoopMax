@@ -242,17 +242,18 @@ void Zappy2::printPins()
                     moduleData.Name + "/invert",
                     0x01, // GET
                     [this](IHttpContext& httpCtx){
+                        bool haveChanges = false;
                         for (auto& pin : moduleData.pins) {
+                            if(this->scheduler->hasSchedules(pin.number)) continue;
                             pin.level = (pin.level == PinLevel::High) ? PinLevel::Low : PinLevel::High;
                             ctx->pins.write(pin.number, pin.level);
+                            haveChanges = true;
                         }
                         std::string jsonPins;
                         this->getJsonPins(jsonPins);
                         //bool res = ctx->config.saveModuleConfig(moduleData);
-                        pendingSave = true;
+                        pendingSave = haveChanges;
                         lastChangeMillis = millis();
-
-
                         httpCtx.send(200, "application/json", jsonPins);
                     }
                 });
@@ -282,18 +283,20 @@ void Zappy2::printPins()
                     moduleData.Name + "/edit/devName",
                     0x02, // post
                     [this](IHttpContext& httpCtx){
-                        moduleData.DeviceName = httpCtx.getParam("name");
-                        moduleData.JsonConfig.clear();
-                        this->buildJsonPayload(moduleData.JsonConfig);
-                        //SAVE JSON DATA:
-                        //bool res = ctx->config.saveModuleConfig(moduleData);
-                        bool res = true;
-                        pendingSave = true;
-                        lastChangeMillis = millis();
-
+                        std::string newVal = httpCtx.getParam("name");
+                        if(!newVal.empty() && newVal.length()>0 && newVal != moduleData.DeviceName)
+                        {
+                            moduleData.DeviceName = httpCtx.getParam("name");
+                            //moduleData.JsonConfig.clear();
+                            //this->buildJsonPayload(moduleData.JsonConfig);
+                            //SAVE JSON DATA:
+                            //bool res = ctx->config.saveModuleConfig(moduleData);
+                            pendingSave = true;
+                            lastChangeMillis = millis();
+                        }
                         //ctx->serial.printLn(moduleData.JsonConfig);
-                        if(res) httpCtx.send(200, "text/plain", "ok");
-                        if(!res) httpCtx.send(400, "text/plain", "ko");
+                        if(pendingSave) httpCtx.send(200, "text/plain", "ok");
+                        if(!pendingSave) httpCtx.send(400, "text/plain", "ko");
                     }
                 });
 
