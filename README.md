@@ -266,6 +266,7 @@ not a new project from scratch.
 | Framework | Board         | Core |
 |----------|--------------|------|
 | Arduino  | ESP32-WROOM  | 2    |
+| Arduino  | ESP32-S3N8   | 2    |
 
 ---
 
