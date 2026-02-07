@@ -40,6 +40,8 @@ namespace LoopMax::Core {
                      const uint32_t FreeHeap() override { return sys.FreeHeap(); }
                      const uint32_t HeapSize() override { return sys.FlashSize(); }
                      const uint32_t CpuFreq() override { return sys.CpuFreq(); }
+                     const char* buildDate()  override {  return sys.buildDate(); }
+                     const char* buildTime()  override {  return sys.buildTime(); }
                     
                      ///Types::ServiceState status() override { return Types::ServiceState::READY; }
                      Types::SystemMode mode() override { return currentMode; }

@@ -34,7 +34,14 @@ export default class PinScheduler {
             "lblTimeSlot":       { it: "Intervallo orario",     en: "Time slot",            es: "Franja horaria" },
             "lblStart":          { it: "Inizio",                en: "Start",                es: "Inicio" },
             "lblEnd":            { it: "Fine",                  en: "End",                  es: "Fin" },
-            "lblDevDateTime":    { it: "Data e ora dispositivo:", en: "Device Date Time",   es: "Fecha y hora del dispositivo" }
+            "lblDevDateTime":    { it: "Data e ora dispositivo:", en: "Device Date Time",   es: "Fecha y hora del dispositivo" },
+            "msgErrDays":    { it: "Seleziona almeno un giorno:", en: "Select at least one day",   es: "Seleccione al menos un día" },
+            "msgParamsError":    { it: "Parametri errati", en: "Wrong parameters",   es: "Parámetros erróneos" },
+            "msgScheduleSaved":    { it: "Programmazione salvata.", en: "Programming saved.",   es: "Programación guardada." },
+            "msgScheduleDeleted":    { it: "Programmazione eliminata.", en: "Programming deleted",   es: "Programación eliminada" },
+            "msgWrongDate":    { it: "Date non valide", en: "Invalid dates",   es: "Fechas inválidas" }
+                        
+            
         };
 
 
@@ -45,15 +52,14 @@ export default class PinScheduler {
     getScheduleButton(pinNumber) {
         if(!pinNumber || Number(pinNumber)<=0) return;
         const schedules = this.getSchedules();
-        if(!schedules) return;
         let lblName = 'lblSchedule';
         if(schedules[pinNumber])
         {
             lblName = 'lblEdit';
         }
-        return  `<button class="btn btn-sm btn-outline-success pin-save-btn secondFont flex-fill" 
-                        data-pin-number="${pinNumber}" data-tr="${lblName}"></button>`;
+        return  `<button id="schedule-btn-${pinNumber}" class="btn btn-sm btn-outline-success secondFont flex-fill">${translator.tr(lblName)}</button>`;
     }
+    //data-pin-number="${pinNumber}"
     
     getHtml() {
         //const lblCancel = translator.tr("lblCancel");
@@ -159,12 +165,21 @@ export default class PinScheduler {
     }
 
 initObjects() {
-    document.querySelectorAll(".schedule-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const pin = Number(btn.dataset.pinNumber);
-            this.openScheduleModal(pin);
-        });
+    const pins = Array.isArray(this.data.pins) ? this.data.pins : [];
+    pins.forEach(pin => {
+        const bt = document.getElementById(`schedule-btn-${pin.number}`);
+        if (bt) {
+            bt.addEventListener("click", (e) => 
+                { 
+                    e.stopPropagation(); 
+                    e.preventDefault();
+                    this.openScheduleModal(Number(pin.number)); 
+                });
+
+        }
     });
+
+
     //Program Change (weekly/onetime)
     document.getElementById("schType")?.addEventListener("change", e => {
         const type = e.target.value;
@@ -186,7 +201,7 @@ initObjects() {
 
 
     this.renderSchedules();
-    this.updateScheduleButtons();
+    
 }
 
 
@@ -222,33 +237,37 @@ async saveSchedule() {
     if (type === "weekly") {
             const mask = this.getSelectedDaysMask();
             if (mask === 0) {
-                toast("Seleziona almeno un giorno", "danger");
+                toast(translator.tr("msgErrDays"), "danger");
                 loader(false);
                 return;
             }
-
             const on = this.timeToMinutes(document.getElementById("schOnTime").value);
             const off = this.timeToMinutes(document.getElementById("schOffTime").value);
-
             // invia solo interi validi 0-1439
             form.append("days", mask);
             form.append("on", on);
             form.append("off", off);
-
             // solo per debug/UI, non per il server
             //console.log(`Pin ${pin} weekly schedule: ${on} → ${off}${on > off ? " (del giorno successivo)" : ""}`);
 
     } else {
-            const start = this.dtToUnix(document.getElementById("schStartDT").value);
-            const end = this.dtToUnix(document.getElementById("schEndDT").value);
-            form.append("start", start);
-            form.append("end", end);
+                const start = Number(this.dtToUnix(document.getElementById("schStartDT").value));
+                const end   = Number(this.dtToUnix(document.getElementById("schEndDT").value));
+                form.append("start", start);
+                form.append("end", end);
 
-            if (!start || start <= 0 || !end || end <= 0) {
-                toast("Parametri non validi", "danger");
-                loader(false);
-                return;
-            }
+                if (!Number.isFinite(start) || start <= 0 || !Number.isFinite(end) || end <= 0) {
+                    toast(translator.tr("msgParamsError"), "danger");
+                    loader(false);
+                    return;
+                }
+
+                if (start >= end) {
+                    toast(translator.tr("msgWrongDate"), "danger");
+                    loader(false);
+                    return;
+                }
+
     }
 
     try {
@@ -260,10 +279,9 @@ async saveSchedule() {
         this.data.JsonConfig = JSON.stringify(updated);
         await this.removeSchAccordion(pin, 1500);
         this.renderSchedules();
-        this.updateScheduleButtons();
-        toast("Programma salvato", "success");
         bootstrap.Modal.getInstance(document.getElementById("scheduleModal")).hide();
-        this.updatePinToggleState(Number(pin));
+        toast(translator.tr("msgScheduleSaved"), "success");
+
     } catch (err) {
         toast(err.message || err, "danger");
     } finally {
@@ -275,25 +293,19 @@ renderSchedules() {
     const schedules = this.getSchedules();
     const lblSchedule = translator.tr("lblSchedule");
     let lblType = "";
-    
     Object.keys(schedules).forEach(pin => {
         const container = document.querySelector(`.relay-switch[data-pin-number="${pin}"]`);
         if (!container) return;
-
         // Crea ID univoco per l'accordion di questo pin
         const accId = `scheduleAccordionPin${pin}`;
-
         let html = `
             <div class="accordion mt-2 ms-2 schedule-accordion" id="${accId}">
         `;
-      
         schedules[pin].forEach((s, idx) => {
             const itemId = `${accId}-item${idx}`;
-
             let onStr = "";
             let offStr = "";
             let overnightNote = "";
-
             if (s.type === "weekly") {
                 lblType = translator.tr("lblWeekly");
                 onStr = `${Math.floor(s.on/60).toString().padStart(2,'0')}:${(s.on%60).toString().padStart(2,'0')}`;
@@ -307,8 +319,6 @@ renderSchedules() {
             {
                 lblType = translator.tr("lblOneTime");
             }
-
-                        
             html += `
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading-${itemId}">
@@ -338,15 +348,13 @@ renderSchedules() {
             `;
         });
         html += `</div>`; // chiude accordion
-        container.parentNode.querySelectorAll('.schedule-accordion')
-                .forEach(el => {
-                    if (el.id === accId) el.remove();
-                });
-
+        const oldAcc = document.getElementById(accId);
+        if(oldAcc) oldAcc.remove();
         container.insertAdjacentHTML("afterend", html);
         this.updatePinToggleState(Number(pin));
-
+        this.updateScheduleButtons();
     });
+
 }
 
 
@@ -371,13 +379,18 @@ renderSchedules() {
 
         updateScheduleButtons() {
             const schedules = this.getSchedules();
-            document.querySelectorAll(".schedule-btn").forEach(btn => {
-                const pin = Number(btn.dataset.pinNumber);
-                const hasSchedules = Array.isArray(schedules[pin]) && schedules[pin].length > 0;
-                 let lblName = hasSchedules ? "lblEdit" : "lblSchedule"; 
-                 btn.textContent = translator.tr(lblName);
-                 btn.disabled = false;
-            });
+            const pins = Array.isArray(this.data.pins) ? this.data.pins : [];
+
+            for (const pin of pins) {   // <--- QUI È LA DIFFERENZA
+                const btn = document.getElementById(`schedule-btn-${pin.number}`);
+                if (btn) {
+                    const hasSchedules = Array.isArray(schedules[pin.number]) && schedules[pin.number].length > 0;
+                    //console.log(schedules[pin.number]);
+                    let lblName = hasSchedules ? "lblEdit" : "lblSchedule"; 
+                    btn.textContent = translator.tr(lblName);
+                    btn.disabled = false;
+                }
+            }
         }
 
           async removeSchedule(pin) {
@@ -394,7 +407,7 @@ renderSchedules() {
                     await this.removeSchAccordion(pin, 1500);
                     this.renderSchedules();
                     this.updateScheduleButtons();
-                    toast("Programma rimosso", "success");
+                    toast(translator.tr("msgScheduleDeleted"), "success");
                 } catch (err) {
                     toast(err.message || err, "danger");
                 } finally {
@@ -469,6 +482,19 @@ renderSchedules() {
                 catch { cfg = {}; }
                 return cfg.schedules || {};
             }
+
+            removeScheduleFromJson(pin) {
+                let cfg = {};
+                try { 
+                    cfg = JSON.parse(this.data.JsonConfig || "{}"); 
+                } catch { 
+                    cfg = {}; 
+                }
+                if (!cfg.schedules) return;
+                delete cfg.schedules[pin];
+                this.data.JsonConfig = JSON.stringify(cfg);
+            }
+
 
 
             updateModalForm(pin) {
@@ -552,99 +578,55 @@ renderSchedules() {
                     }
                 }
 
+checkExpiredSchedules() {
+    const now = this.time.unix * 1000;
+    const schedules = this.getSchedules();
 
-/*
-                checkExpiredSchedules() {
-                    const now = this.time.unix * 1000;
-                    const schedules = this.getSchedules();
-                    Object.keys(schedules).forEach(pin => {
-                        const pinSchedules = schedules[pin];
-                        if (!pinSchedules) return;
-                        let isActive = false;
-                        let removeAccordion = true;
-                        const remaining = [];
-                        pinSchedules.forEach(s => {
-                            if (this.isScheduleActive(s, now)) {
-                                this.updateToggle(pin, true, 1, "", "none");
-                            }
-                            else
-                            {
-                                this.updateToggle(pin, true, 0, "0.4", "none");
-                            }
-                            if (s.type === "weekly") {
-                                remaining.push(s);
-                                return;
-                            }
-                            const endMs = s.end * 1000;
-                            if (endMs > now) {
-                                remaining.push(s);
-                                return;
-                            } else {
-                                this.updateToggle(pin, false, 0, "", "");
-                                const btn = document.querySelector(`.schedule-btn[data-pin-number="${pin}"]`);
-                                if(btn) btn.textContent = translator.tr("lblSchedule");
-                                this.removeSchAccordion(pin, 1500);
-                                return;
-                            }
-                        });
-                        if (remaining.length > 0) {
-                            schedules[pin] = remaining;
-                        } else {
-                            delete schedules[pin];
-                        }
-                    });
-                }
-*/
+    for (const pin in schedules) {
+        const pinSchedules = schedules[pin];
+        if (!pinSchedules || pinSchedules.length === 0) continue;
 
-            checkExpiredSchedules() {
-                const now = this.time.unix * 1000;
-                const schedules = this.getSchedules();
-                for (const pin in schedules) {
-                    const pinSchedules = schedules[pin];
-                    if (!pinSchedules) continue;
-                    const remaining = [];
-                    let shouldRemoveAccordion = false;
-                    let active = false;
-                    for (const s of pinSchedules) {
-                        // Weekly → sempre rimanente
-                        if (s.type === "weekly") {
-                            remaining.push(s);
-                            continue;
-                        }
-                        const isActive = this.isScheduleActive(s, now);
-                        active = active || isActive;
-                        if (isActive) {
-                            this.updateToggle(pin, true, 1, "", "none");
-                            remaining.push(s);
-                            continue;
-                        }
-                        const endMs = s.end * 1000;
-                        if (endMs > now) {
-                            // Non attivo ma non scaduto → rimane
-                            this.updateToggle(pin, true, 0, "0.4", "none");
-                            remaining.push(s);
-                        } else {
-                            // Scaduto → rimuovere
-                            shouldRemoveAccordion = true;
-                        }
-                    }
-                    // Se qualche schedule è scaduto
-                    if (shouldRemoveAccordion) {
-                        this.updateToggle(pin, false, 0, "", "");
-                        const btn = document.querySelector(`.schedule-btn[data-pin-number="${pin}"]`);
-                        if (btn) btn.textContent = translator.tr("lblSchedule");
-                        this.removeSchAccordion(pin, 1500);
-                    }
-                    // Aggiorna struttura
-                    if (remaining.length > 0) {
-                        schedules[pin] = remaining;
-                    } else {
-                        delete schedules[pin];
-                    }
-                }
+        let shouldRemoveAccordion = false;
+        let pinShouldBeOn = false;
+
+        for (const s of pinSchedules) {
+
+            const isActive = this.isScheduleActive(s, now);
+
+            if (isActive) {
+                pinShouldBeOn = true;
+                break; // weekly attivo → non serve altro
             }
 
+            // weekly non attivo → continua
+            if (s.type === "weekly") continue;
 
+            // onetime scaduto
+            if (s.end * 1000 <= now) {
+                shouldRemoveAccordion = true;
+                break; // inutile processare altro
+            }
+        }
+
+        // Aggiorna toggle solo se cambia stato
+        if (shouldRemoveAccordion) {
+            this.updateToggle(pin, false, 0, "", "");
+            const btn = document.getElementById(`schedule-btn-${pin}`);
+            if (btn) btn.textContent = translator.tr("lblSchedule");
+            this.removeSchAccordion(pin, 1500);
+            this.removeScheduleFromJson(pin);
+            continue;
+        }
+
+        // weekly attivo
+        if (pinShouldBeOn) {
+            this.updateToggle(pin, true, 1, "", "none");
+        } else {
+            // weekly non attivo
+            this.updateToggle(pin, true, 0, "0.4", "none");
+        }
+    }
+}
 
 
 
@@ -664,17 +646,32 @@ renderSchedules() {
 
             isWeeklyActive(s, now) {
                 const d = new Date(now);
-                // giorno della settimana (0=dom, 1=lun, ...)
-                const dow = d.getDay();
-                // bitmask: devi mappare il tuo sistema
-                // supponiamo: 1=lun, 2=mar, 4=mer, 8=g...
-                const bit = 1 << (dow - 1);  
-                if (dow === 0) return false; // domenica fuori bitmask? dipende da te
-                if ((s.days & bit) === 0) return false;
-                // minuti attuali
+                const dow = d.getDay(); // 0=dom,1=lun,...,6=sab
                 const minsNow = d.getHours() * 60 + d.getMinutes();
-                return minsNow >= s.on && minsNow < s.off;
+                // Converti on/off in minuti se sono stringhe
+                const toMins = (v) => {
+                    if (typeof v === "number") return v;
+                    if (typeof v === "string") {
+                        const [h, m] = v.split(":").map(Number);
+                        return h * 60 + m;
+                    }
+                    return NaN;
+                };
+                const on  = toMins(s.on);
+                const off = toMins(s.off);
+                // Bitmask corretta per la tua UI
+                const bit = 1 << dow;
+                //console.log("NOW:", d.toString());
+                //console.log("dow:", dow, "minsNow:", minsNow);
+                //console.log("s.days:", s.days, "s.on:", s.on, "s.off:", s.off);
+                //console.log("bit:", bit, "days & bit:", (s.days & bit));
+                // Se il giorno non è selezionato → non attivo
+                if ((s.days & bit) === 0) return false;
+                // Range orario
+                return minsNow >= on && minsNow < off;
             }
+
+
 
 
             async removeSchAccordion(pin, time = 500) {
@@ -686,6 +683,10 @@ renderSchedules() {
 
 
             updateToggle(pinNumber, disabled, status, opacity, pointerEvents) {
+
+                //console.log("updateToggle");
+                //console.log("pinNumber"+pinNumber, "disabled"+disabled, "status"+status, "opacity"+opacity, "pointerEvents"+pointerEvents);
+
                 const container = document.querySelector(`.relay-switch[data-pin-number="${pinNumber}"]`);
                 if (!container) return;
                 const toggle = container.querySelector(".relay-toggle");
@@ -719,10 +720,11 @@ renderSchedules() {
 
                 //LoopMaxCore change language:
                 onLanguageChange(lng) {
-
                     this.refreshSelectType();
+                    this.updateScheduleButtons();
                     const lblSchedule = translator.tr("lblSchedule");
                     const schedules = this.getSchedules();
+                    //console.log(schedules);
                     Object.keys(schedules).forEach(pin => {
                         const accId = `scheduleAccordionPin${pin}`;
                         schedules[pin].forEach((s, idx) => {
@@ -746,9 +748,7 @@ renderSchedules() {
                     // every 10 sec
                     //if (tick % 10 === 0) { this.checkExpiredSchedules(); }
                     this.checkExpiredSchedules();
-
                     setTextContent("divDeviceDateTime", this.time.formatNow());
-
                     //Refresh Eventually Dev Time into Scheduler accordions:
                     const schedules = this.getSchedules();
                     Object.keys(schedules).forEach(pin => {

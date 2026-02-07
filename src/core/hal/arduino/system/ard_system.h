@@ -84,7 +84,10 @@
                         #endif
                     }
 
+                    const char* buildDate()  override {  return __DATE__; }
+                    const char* buildTime()  override {  return __TIME__; }
 
+                    
 
 
 

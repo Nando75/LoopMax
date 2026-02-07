@@ -60,6 +60,8 @@
                     esp_restart();
                 #endif
             }
+            const char* buildDate()  override {  return __DATE__; }
+            const char* buildTime()  override {  return __TIME__; }
 
 
             Types::SystemMode mode() override { return Types::SystemMode::AP; }

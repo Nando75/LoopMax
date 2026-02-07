@@ -27,6 +27,13 @@ namespace LoopMax::Services {
             // getter e setter per la modalità
             //virtual Types::SystemMode mode() = 0;         // lettura
             virtual void restart() = 0;
+
+
+            virtual const char* buildDate() = 0;
+            virtual const char* buildTime() = 0;
+            
+
+
             
 
             virtual ~ISystem() {}

@@ -41,6 +41,8 @@ namespace LoopMax {
                     // ---------------- Mode ----------------
                      bool setMode(WifiMode mode) override;
                      WifiMode getMode() const override;
+                     std::string MacAddress() override { return _wifi.MacAddress(); }
+
 
                     // ---------------- STA ----------------
                      bool connect(const char* ssid = nullptr, const char* psw = nullptr) override;

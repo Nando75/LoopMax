@@ -202,23 +202,18 @@ namespace LoopMax::Core {
 
 
 
- 
-
-
-
         std::string ConfigManager::buildSystemJson(bool isLogged) {
             JsonDocument doc;
-
             JsonObject sys = doc["system"].to<JsonObject>();
-
             sys["debug"]        = IS_DEBUG;
             sys["lng"]        = _settings.lng;
             sys["name"]         = _settings.name;
             sys["key"]          = _settings.key;
             sys["FwVersion"]    = _settings.FwVersion;
+            sys["buildDate"]    = ctx->system.buildDate();
+            sys["buildTime"]    = ctx->system.buildTime();
             sys["Company"]      = _settings.Company;
             sys["url"]          = _settings.CompanyUrl;
-
             sys["core"]         = ctx->system.ChipCores();
             sys["chipRevision"] = ctx->system.ChipRevision();
             sys["cpuFreq"]      = ctx->system.CpuFreq();
@@ -331,9 +326,7 @@ namespace LoopMax::Core {
 
               std::string ConfigManager::buildWifiJson() {
                     JsonDocument doc;
-
                     JsonObject wifi = doc["wifi"].to<JsonObject>();
-
                     // 1. Credenziali
                     wifi["apSsid"]  = _settings.apSsid;
                     wifi["apPsw"]  = _settings.apPsw;
@@ -348,6 +341,7 @@ namespace LoopMax::Core {
                     wifi["dns"]         = ctx->wifi.dnsActive();
                     wifi["mdns"]        = ctx->wifi.mdnsActive();
                     wifi["publicIp"]    = ctx->wifi.getPublicIP();
+                    wifi["MacAddress"]    = ctx->wifi.MacAddress();
                     wifi["isp"]         = ctx->wifi.Isp();
                     wifi["internet"]    = ctx->wifi.internet();
                     // 3. Array reti locali
@@ -357,7 +351,6 @@ namespace LoopMax::Core {
                         wObj["ssid"] = w.ssid;
                         wObj["rssi"] = w.rssi;
                     }
-
                     std::string out;
                     out.reserve(512);
                     serializeJson(doc, out);

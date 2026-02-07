@@ -42,6 +42,8 @@ namespace LoopMax::Core::Hal {
 
                 uint32_t CurrentIP() override;
                 std::string StringIP() override;
+                std::string MacAddress() override { return WiFi.macAddress().c_str(); }
+
                 const char* Type() override { return "Wifi 2.4 GHz"; }
 
                 void begin(std::string hostname="LoopMax") override {  _hostname=hostname; }

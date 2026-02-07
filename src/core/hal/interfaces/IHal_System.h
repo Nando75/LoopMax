@@ -25,6 +25,9 @@ namespace LoopMax {
                     virtual void setMode(Types::SystemMode mode) = 0;
                     
                     virtual void restart() = 0;
+
+                    virtual const char* buildDate() = 0;
+                    virtual const char* buildTime() = 0;
                     
                     virtual ~IHal_System() {}
                 };

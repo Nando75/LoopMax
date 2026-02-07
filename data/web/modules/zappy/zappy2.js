@@ -40,11 +40,9 @@ export default class Zappy2 {
         const deviceName = this.data.DeviceName || this.data.Name || "Zappy2";
         const update = this.data.UpdateAvalaible || false;
         //const isRegistered = this.data.isRegistered || false;
-
         const internet = this.wifi.internet || false;
-        const lblUpdate = translator.tr("lblUpdateFw")
-        const lblCancel = translator.tr("lblCancel");
-
+        //const lblUpdate = translator.tr("lblUpdateFw")
+        //const lblCancel = translator.tr("lblCancel");
         const pins = Array.isArray(this.data.pins) ? this.data.pins : [];
         const hasMultiplePins = pins.length > 1;
             const pinsHtml = pins.map((pin, idx) => {
@@ -52,7 +50,6 @@ export default class Zappy2 {
                 const label = pin.name || `Relè ${idx + 1}`;
                 const isOn = pin.level ? "on" : "";
                 const btSchedule = internet ?  this.PinScheduler.getScheduleButton(ch) : ``;
-
                 return `
                     <div class="relay-switch row align-items-center g-2 gx-0 w-100 mx-0" data-pin-number="${ch}">
                         <div class="col-12 col-md-3 d-flex justify-content-center">
@@ -79,6 +76,7 @@ export default class Zappy2 {
                 `;
             }).join("");
 
+
         const invertBoxHtml = hasMultiplePins ? `
             <div class="invert-box">
                 <label class="form-label fw-bold secondFont" data-tr="lblInvert"></label>
@@ -86,6 +84,9 @@ export default class Zappy2 {
             </div>
         ` : "";
 
+
+        const updateBoxHtml = ``;
+        /*
         const updateBoxHtml = update ? `
             <div class="mb-2 invert-box">
                     <div class="d-flex gap-2">
@@ -104,8 +105,10 @@ export default class Zappy2 {
                 </div>
 
         ` : "";
+        */
         
-            const registerBoxHtml = ``;
+            
+        const registerBoxHtml = ``;
             /*
             const registerBoxHtml = !isRegistered ? `
                 <div class="mb-2 invert-box">
@@ -140,8 +143,8 @@ export default class Zappy2 {
             */
 
 
-
-
+        const updateModalHtml = ``;
+        /*
         const updateModalHtml = update ? `
                     <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
@@ -159,6 +162,7 @@ export default class Zappy2 {
                         </div>
                     </div>
         ` : "";
+        */
 
 
 
@@ -299,7 +303,7 @@ initObjects() {
     });
 
 
-
+    /*
     if(update)
     {
         const modalUpdate = document.getElementById('modalUpdate');
@@ -321,7 +325,9 @@ initObjects() {
                 };
             }
     }
+    */
 
+    /*
     if(!isRegistered)
     {
         const btRegisterDevice = document.getElementById("btRegisterDevice");
@@ -329,6 +335,7 @@ initObjects() {
         const copyBtn = document.getElementById("btCopyDeviceKey");
         if (copyBtn) copyBtn.addEventListener("click", () => { this.copyKey(copyBtn); });
     }
+    */
 
 
     if(internet) this.PinScheduler.initObjects();

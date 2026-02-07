@@ -40,6 +40,7 @@ namespace LoopMax::Core::Hal {
 
             virtual uint32_t CurrentIP() = 0;
             virtual std::string StringIP() = 0;
+            virtual std::string MacAddress() = 0;
             virtual const char* Type() = 0;
             virtual std::string testIP() = 0;
 

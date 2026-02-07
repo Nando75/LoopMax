@@ -9,6 +9,10 @@
 
 namespace LoopMax::Core::Hal {
 
+    idf_esp32wifi::idf_esp32wifi()
+    {
+        
+    }
 
  
     bool idf_esp32wifi::setMode(WifiMode mode) {
